@@ -1,1 +1,1 @@
-console.log("working");
+#!/usr/bin/env node
