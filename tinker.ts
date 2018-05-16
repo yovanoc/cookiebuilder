@@ -1,6 +1,7 @@
 import { SwfReader } from 'xswf';
+import { InstructionCode } from 'xswf/dist/abcFile/types/bytecode';
 import { IQName, MultinameKind } from 'xswf/dist/abcFile/types/multiname';
-import { ITraitSlot, TraitKind } from 'xswf/dist/abcFile/types/trait';
+import { ITraitMethod, ITraitSlot, TraitKind } from 'xswf/dist/abcFile/types/trait';
 import { ITagDoAbc, TagCode } from 'xswf/dist/Types';
 
 const reader = new SwfReader('./tests/DofusInvoker.swf');
@@ -32,3 +33,12 @@ const toLog = orderedMessages.map((m) => `${m.id}: ${m.name}`);
 
 // tslint:disable-next-line:no-console
 console.log(JSON.stringify(toLog, null, 2));
+
+const bodies = abcFile.methodBodies.filter((m) => {
+  return m.method.name.includes('Message') && m.method.name.includes('serialize');
+});
+
+bodies.forEach((m) => {
+  // tslint:disable-next-line:no-console
+  console.log(`${m.method.name} -> ${JSON.stringify(m.code.map((c) => `${InstructionCode[c.code]}`))}`);
+});
