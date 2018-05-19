@@ -33,21 +33,18 @@ function filterBytecode(method: IMethodBody) {
 bodies.forEach((m) => {
   const codes = filterBytecode(m);
 
-  // tslint:disable-next-line:no-console
   console.log(`${m.method.name} -> ${JSON.stringify(codes.map((c) => `${InstructionCode[c.code]}`))}`);
 
   const propvoid = codes.find((c) => c.code === InstructionCode.Op_callpropvoid) as ICallpropvoidInstr;
 
   const multiname = abcFile.constantPool.multinames[propvoid.operand0] as IQName;
 
-  // tslint:disable-next-line:no-console
   console.log(multiname.name, multiname.ns.name);
 
   const contentFunc = abcFile.methodBodies.find((mm) => mm.method.name.includes(multiname.name));
 
   const codes2 = filterBytecode(contentFunc);
 
-  // tslint:disable-next-line:no-console
   console.log(`${JSON.stringify(codes2.map((c) => `${InstructionCode[c.code]}`))}`);
 });
 
