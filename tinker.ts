@@ -1,10 +1,10 @@
 import { SwfReader } from 'xswf';
-import { ICallpropvoidInstr, InstructionCode } from 'xswf/dist/abcFile/types/bytecode';
+import { ICallpropvoidInstr, InstructionCode, Instruction, IThrowInstr, IGetpropertyInstr, IGetlocal0Instr, IGetlocal1Instr, IGetlocalInstr } from 'xswf/dist/abcFile/types/bytecode';
 import { IMethodBody } from 'xswf/dist/abcFile/types/methods';
 import { IQName, MultinameKind } from 'xswf/dist/abcFile/types/multiname';
 import { ITagDoAbc, TagCode } from 'xswf/dist/Types';
 
-const reader = new SwfReader('./tests/DofusInvoker.swf');
+const reader = new SwfReader('./tests/DofusInvoker-2.swf');
 
 const file = reader.getFile();
 
@@ -16,25 +16,206 @@ const messageClasses = abcFile.instances.filter((c) => {
   return c.name.kind === MultinameKind.QName && c.name.ns.name.includes('dofus.network.messages');
 });
 
-const bodies = abcFile.methodBodies.filter((m) => m.method.name.includes('deserializeAs_AdminCommandMessage'));
+const bodies = abcFile.methodBodies.filter((m) => m.method.name.includes('/serializeAs_MapComplementaryInformationsDataMessage'));
+//MapComplementaryInformationsDataMessage
 
 function filterBytecode(method: IMethodBody) {
-  const codes = method.code.filter((c) => {
-    if (c.code === InstructionCode.Op_debug
-      || c.code === InstructionCode.Op_debugfile
-      || c.code === InstructionCode.Op_debugline) {
-      return;
-    }
-    return c;
+  return method.code.filter((c) => {
+    return !(c.code === InstructionCode.debug
+      || c.code === InstructionCode.debugfile
+      || c.code === InstructionCode.debugline);
   });
-  return codes;
 }
 
+function instructionToString(instr: Instruction) {
+  switch (instr.code) {
+    case InstructionCode.getlocal:
+      return `getlocal(${instr.index})`;
+    case InstructionCode.getproperty:
+      return `getproperty(${(instr.name as IQName).name})`;
+    case InstructionCode.callpropvoid:
+      return `callpropvoid(${(instr.name as IQName).name}, ${instr.argCount})`;
+    case InstructionCode.findpropstrict:
+      return `findpropstrict(${(instr.name as IQName).name})`;
+    case InstructionCode.pushstring:
+      return `pushstring("${instr.value}")`;
+    case InstructionCode.pushbyte:
+      return `pushbyte(${instr.byteValue})`;
+    default:
+      return InstructionCode[instr.code];
+  }
+}
+
+function preprocessBytecode(code: Instruction[]): Instruction[] {
+  return code.filter((c) => {
+    return !(c.code === InstructionCode.debug
+      || c.code === InstructionCode.debugfile
+      || c.code === InstructionCode.debugline);
+  }).map(c => {
+    switch (c.code) {
+    case InstructionCode.getlocal_0:
+      return {
+        code: InstructionCode.getlocal,
+        index: 0
+      } as IGetlocalInstr;
+    case InstructionCode.getlocal_1:
+      return {
+        code: InstructionCode.getlocal,
+        index: 1
+      } as IGetlocalInstr;
+    case InstructionCode.getlocal_2:
+      return {
+        code: InstructionCode.getlocal,
+        index: 2
+      } as IGetlocalInstr;
+    case InstructionCode.getlocal_3:
+      return {
+        code: InstructionCode.getlocal,
+        index: 3
+      } as IGetlocalInstr;
+    default:
+      return c;
+    }
+  });
+}
+
+
+
+const patterns = [
+  {
+    label: 'function prelude',
+    pattern: [
+      InstructionCode.getlocal,
+      InstructionCode.pushscope
+    ],
+    handler: () => {
+      console.log('prelude')
+    }
+  },
+  {
+    label: 'precondition if-throw block',
+    pattern: [
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.pushbyte,
+      InstructionCode.ifnlt,
+      InstructionCode.findpropstrict,
+      InstructionCode.pushstring,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.add,
+      InstructionCode.pushstring,
+      InstructionCode.add,
+      InstructionCode.contructprop,
+      InstructionCode.throw
+    ],
+    handler: () => {}
+  },
+  {
+    label: 'return void statement',
+    pattern: [
+      InstructionCode.returnvoid
+    ],
+    handler: () => {}
+  },
+  {
+    label: 'simple prop',
+    pattern: [
+      InstructionCode.getlocal,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.callpropvoid
+    ],
+    handler: (instrs: [
+      IGetlocal0Instr,
+      IGetlocal1Instr,
+      IGetpropertyInstr,
+      ICallpropvoidInstr
+    ]) => {
+      console.log((instrs[2].name as IQName).name);
+      console.log((instrs[3].name as IQName).name);
+    }
+  },
+  {
+    label: 'simple vec',
+    pattern: [
+      InstructionCode.getlocal,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.getproperty,
+      InstructionCode.callpropvoid,
+      InstructionCode.pushbyte,
+      InstructionCode.convert_u,
+      InstructionCode.setlocal_2,
+      InstructionCode.jump,
+      InstructionCode.label,
+      InstructionCode.getlocal,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.callpropvoid,
+      InstructionCode.getlocal,
+      InstructionCode.increment,
+      InstructionCode.convert_u,
+      InstructionCode.setlocal_2,
+      InstructionCode.getlocal,
+      InstructionCode.getlocal,
+      InstructionCode.getproperty,
+      InstructionCode.getproperty,
+      InstructionCode.iflt
+    ],
+    handler: () => {}
+  }
+].sort((a, b) => b.pattern.length - a.pattern.length)
+
+
 bodies.forEach((m) => {
-  const codes = filterBytecode(m);
+  const codes = preprocessBytecode(m.code);
+  console.log('=======', m.method.name, '=======');
+  console.log('');
+  //console.log(`${m.method.name} -> ${JSON.stringify(codes.map((c) => `${InstructionCode[c.code]}`))}`);
 
-  console.log(`${m.method.name} -> ${JSON.stringify(codes.map((c) => `${InstructionCode[c.code]}`))}`);
+  //console.log(codes.map(c => InstructionCode[c.code]).join('\n'));
 
+  let i = 0;
+  while (i < codes.length) {
+    const matchedPattern = patterns.
+      filter(entry => entry.pattern.length <= codes.length - i).
+      find(entry => {
+        let match = true;
+        for (let k = 0; k < entry.pattern.length; k++) {
+          if (entry.pattern[k] !== codes[i + k].code) {
+            match = false;
+            break;
+          }
+        }
+        return match;
+      });
+    
+    if (matchedPattern) {
+        const instrs = codes.slice(i, i + matchedPattern.pattern.length);
+        console.log(`[${i}] ${matchedPattern.label}`);
+        console.log('---------------------------');
+        console.log(instrs.map(c => instructionToString(c)).join('\n'));
+        console.log('---------------------------');
+        console.log('');
+        //matchedPattern.handler(instrs as any);
+        i += instrs.length;
+    }
+    else {
+      console.log(`[${i}] unknown bytecode sequence`);
+      console.log('---------------------------');
+      console.log(codes.slice(i).map(c => instructionToString(c)).join('\n'));
+      console.log('---------------------------');
+      console.log('');
+      break;
+    }
+  }
+
+
+  return;
+/*
   const propvoid = codes.find((c) => c.code === InstructionCode.Op_callpropvoid) as ICallpropvoidInstr;
 
   const multiname = abcFile.constantPool.multinames[propvoid.operand0] as IQName;
@@ -45,8 +226,91 @@ bodies.forEach((m) => {
 
   const codes2 = filterBytecode(contentFunc);
 
-  console.log(`${JSON.stringify(codes2.map((c) => `${InstructionCode[c.code]}`))}`);
+  console.log(`${JSON.stringify(codes2.map((c) => `${InstructionCode[c.code]}`))}`);*/
 });
+
+/*
+patterns := []pattern{
+		{handleVecPropDynamicLen, []string{"getlocal", "increment", "convert", "setlocal", "getlocal", "pushbyte", "iflt"}},
+		{handleVecTypeManagerProp, []string{"getproperty", "getlocal", "getproperty", "getlex", "astypelate", "callproperty"}},
+		{handleBBWProp, []string{"getlex", "getlocal", "pushbyte", "getlocal", "getproperty", "callproperty"}},
+		{handleVecScalarProp, []string{"getproperty", "getlocal", "getproperty", "callpropvoid"}},
+    {handleVecPropLength, []string{"getproperty", "getproperty", "callpropvoid"}},
+    {handleSimpleProp, []string{"getproperty", "callpropvoid"}},
+		{handleTypeManagerProp, []string{"getproperty", "callproperty", "callpropvoid"}},
+		{handleGetProperty, []string{"getproperty"}},
+  }
+  */
+
+/*
+public function serializeAs_ProtocolRequired(param1:ICustomDataOutput) : void
+{
+   if(this.requiredVersion < 0)
+   {
+      throw new Error("Forbidden value (" + this.requiredVersion + ") on element requiredVersion.");
+   }
+   param1.writeInt(this.requiredVersion);
+   if(this.currentVersion < 0)
+   {
+      throw new Error("Forbidden value (" + this.currentVersion + ") on element currentVersion.");
+   }
+   param1.writeInt(this.currentVersion);
+}
+
+getlocal_0
+pushscope
+
+getlocal_0
+getproperty
+pushbyte
+ifnlt
+findpropstrict
+pushstring
+getlocal_0
+getproperty
+add
+pushstring
+add
+contructprop
+throw
+
+getlocal_1
+getlocal_0
+getproperty
+callpropvoid
+
+getlocal_0
+getproperty
+pushbyte
+ifnlt
+findpropstrict
+pushstring
+getlocal_0
+getproperty
+add
+pushstring
+add
+contructprop
+throw
+
+getlocal_1
+getlocal_0
+getproperty
+callpropvoid
+
+returnvoid
+
+
+getlocal_0
+pushscope
+getlocal_0
+getlocal_1
+callpropvoid
+getlocal_0
+getlocal_1
+callpropvoid
+returnvoid
+*/
 
 /*
 func (b *builder) ExtractEnum(class as3.Class) (Enum, error) {
