@@ -1,5 +1,5 @@
 import { SwfReader } from 'xswf';
-import { ICallpropvoidInstr, InstructionCode, Instruction, IThrowInstr, IGetpropertyInstr, IGetlocal0Instr, IGetlocal1Instr, IGetlocalInstr } from 'xswf/dist/abcFile/types/bytecode';
+import { ICallpropvoidInstr, InstructionCode, Instruction, IThrowInstr, IGetpropertyInstr, IGetlocal0Instr, IGetlocal1Instr, IGetlocalInstr, ISetlocalInstr } from 'xswf/dist/abcFile/types/bytecode';
 import { IMethodBody } from 'xswf/dist/abcFile/types/methods';
 import { IQName, MultinameKind } from 'xswf/dist/abcFile/types/multiname';
 import { ITagDoAbc, TagCode } from 'xswf/dist/Types';
@@ -31,6 +31,8 @@ function instructionToString(instr: Instruction) {
   switch (instr.code) {
     case InstructionCode.getlocal:
       return `getlocal(${instr.index})`;
+    case InstructionCode.setlocal:
+      return `setlocal(${instr.index})`;
     case InstructionCode.getproperty:
       return `getproperty(${(instr.name as IQName).name})`;
     case InstructionCode.callpropvoid:
@@ -55,6 +57,10 @@ function instructionToString(instr: Instruction) {
       return `getlex(${(instr.name as IQName).name})`;
     case InstructionCode.callproperty:
       return `callproperty(${(instr.name as IQName).name}, ${instr.argCount})`;
+    case InstructionCode.pushdouble:
+      return `pushdouble(${instr.value})`;
+    case InstructionCode.contructprop:
+      return `contructprop(${(instr.name as IQName).name}, ${instr.argCount})`;
     default:
       return InstructionCode[instr.code];
   }
@@ -91,6 +97,30 @@ function preprocessBytecode(code: Instruction[]): Instruction[] {
         index: 3,
         byteOffset: c.byteOffset
       } as IGetlocalInstr;
+    case InstructionCode.setlocal_0:
+      return {
+        code: InstructionCode.setlocal,
+        index: 0,
+        byteOffset: c.byteOffset
+      } as ISetlocalInstr;
+    case InstructionCode.setlocal_1:
+      return {
+        code: InstructionCode.setlocal,
+        index: 1,
+        byteOffset: c.byteOffset
+      } as ISetlocalInstr;
+    case InstructionCode.setlocal_2:
+      return {
+        code: InstructionCode.setlocal,
+        index: 2,
+        byteOffset: c.byteOffset
+      } as ISetlocalInstr;
+    case InstructionCode.setlocal_3:
+      return {
+        code: InstructionCode.setlocal,
+        index: 3,
+        byteOffset: c.byteOffset
+      } as ISetlocalInstr;
     default:
       return c;
     }
@@ -215,7 +245,7 @@ bodies.forEach((m) => {
         const instrs = codes.slice(i, i + matchedPattern.pattern.length);
         console.log(`[${i}] ${matchedPattern.label}`);
         console.log('---------------------------');
-        console.log(instrs.map(c => c.byteOffset + ' ' + instructionToString(c)).join('\n'));
+        console.log(instrs.map(c => c.byteOffset + '\t' + instructionToString(c)).join('\n'));
         console.log('---------------------------');
         console.log('');
         //matchedPattern.handler(instrs as any);
@@ -224,7 +254,7 @@ bodies.forEach((m) => {
     else {
       console.log(`[${i}] unknown bytecode sequence`);
       console.log('---------------------------');
-      console.log(codes.slice(i).map(c => c.byteOffset + ' ' + instructionToString(c)).join('\n'));
+      console.log(codes.slice(i).map(c => c.byteOffset + '\t' + instructionToString(c)).join('\n'));
       console.log('---------------------------');
       console.log('');
       break;
