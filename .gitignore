@@ -2,3 +2,5 @@
 node_modules
 dist
 sources/
+.DS_Store
+output.json
