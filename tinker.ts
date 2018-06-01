@@ -16,7 +16,7 @@ const messageClasses = abcFile.instances.filter((c) => {
   return c.name.kind === MultinameKind.QName && c.name.ns.name.includes('dofus.network.messages');
 });
 
-const bodies = abcFile.methodBodies.filter((m) => m.method.name.includes('/serializeAs_MapComplementaryInformationsDataMessage'));
+const bodies = abcFile.methodBodies.filter((m) => m.method.name.includes('/serializeAs_IdentificationMessage'));
 //MapComplementaryInformationsDataMessage
 
 function filterBytecode(method: IMethodBody) {
@@ -51,6 +51,10 @@ function instructionToString(instr: Instruction) {
       return `iftrue(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
     case InstructionCode.iffalse:
       return `iffalse(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
+    case InstructionCode.getlex:
+      return `getlex(${(instr.name as IQName).name})`;
+    case InstructionCode.callproperty:
+      return `callproperty(${(instr.name as IQName).name}, ${instr.argCount})`;
     default:
       return InstructionCode[instr.code];
   }
