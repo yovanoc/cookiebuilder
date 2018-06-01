@@ -41,6 +41,16 @@ function instructionToString(instr: Instruction) {
       return `pushstring("${instr.value}")`;
     case InstructionCode.pushbyte:
       return `pushbyte(${instr.byteValue})`;
+    case InstructionCode.ifnlt:
+      return `ifnlt(${instr.offset}) => ${instr.byteOffset + instr.offset + 4}`;
+    case InstructionCode.jump:
+      return `jump(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
+    case InstructionCode.iflt:
+      return `iflt(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
+    case InstructionCode.iftrue:
+      return `iftrue(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
+    case InstructionCode.iffalse:
+      return `iffalse(${instr.operand0}) => ${instr.byteOffset + instr.operand0 + 4}`;
     default:
       return InstructionCode[instr.code];
   }
@@ -56,22 +66,26 @@ function preprocessBytecode(code: Instruction[]): Instruction[] {
     case InstructionCode.getlocal_0:
       return {
         code: InstructionCode.getlocal,
-        index: 0
+        index: 0,
+        byteOffset: c.byteOffset
       } as IGetlocalInstr;
     case InstructionCode.getlocal_1:
       return {
         code: InstructionCode.getlocal,
-        index: 1
+        index: 1,
+        byteOffset: c.byteOffset
       } as IGetlocalInstr;
     case InstructionCode.getlocal_2:
       return {
         code: InstructionCode.getlocal,
-        index: 2
+        index: 2,
+        byteOffset: c.byteOffset
       } as IGetlocalInstr;
     case InstructionCode.getlocal_3:
       return {
         code: InstructionCode.getlocal,
-        index: 3
+        index: 3,
+        byteOffset: c.byteOffset
       } as IGetlocalInstr;
     default:
       return c;
@@ -197,7 +211,7 @@ bodies.forEach((m) => {
         const instrs = codes.slice(i, i + matchedPattern.pattern.length);
         console.log(`[${i}] ${matchedPattern.label}`);
         console.log('---------------------------');
-        console.log(instrs.map(c => instructionToString(c)).join('\n'));
+        console.log(instrs.map(c => c.byteOffset + ' ' + instructionToString(c)).join('\n'));
         console.log('---------------------------');
         console.log('');
         //matchedPattern.handler(instrs as any);
@@ -206,7 +220,7 @@ bodies.forEach((m) => {
     else {
       console.log(`[${i}] unknown bytecode sequence`);
       console.log('---------------------------');
-      console.log(codes.slice(i).map(c => instructionToString(c)).join('\n'));
+      console.log(codes.slice(i).map(c => c.byteOffset + ' ' + instructionToString(c)).join('\n'));
       console.log('---------------------------');
       console.log('');
       break;
