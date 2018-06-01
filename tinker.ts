@@ -3,6 +3,12 @@ import { ICallpropvoidInstr, InstructionCode, Instruction, IThrowInstr, IGetprop
 import { IMethodBody } from 'xswf/dist/abcFile/types/methods';
 import { IQName, MultinameKind } from 'xswf/dist/abcFile/types/multiname';
 import { ITagDoAbc, TagCode } from 'xswf/dist/Types';
+import { IClassInfo } from '../xswf/dist/abcFile/types/classes';
+import { IInstanceInfo } from '../xswf/dist/abcFile/types/instance';
+import { TraitKind } from '../xswf/dist/abcFile/types/trait';
+import { ConstantKind } from '../xswf/dist/abcFile/types/constant';
+
+import { extractD2Enums } from './src/D2EnumExtractor';
 
 const reader = new SwfReader('./tests/DofusInvoker-2.swf');
 
@@ -11,6 +17,13 @@ const file = reader.getFile();
 const doAbc = file.tags.find((tag) => tag.code === TagCode.DoABC) as ITagDoAbc;
 
 const abcFile = doAbc.abcFile;
+
+
+console.log(JSON.stringify(extractD2Enums(abcFile)[0], null, 2));
+
+
+process.exit();
+
 
 const messageClasses = abcFile.instances.filter((c) => {
   return c.name.kind === MultinameKind.QName && c.name.ns.name.includes('dofus.network.messages');
@@ -240,7 +253,7 @@ bodies.forEach((m) => {
         }
         return match;
       });
-    
+
     if (matchedPattern) {
         const instrs = codes.slice(i, i + matchedPattern.pattern.length);
         console.log(`[${i}] ${matchedPattern.label}`);

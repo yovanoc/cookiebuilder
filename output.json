@@ -1,0 +1,3364 @@
+[
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SubEntityBindingPointCategoryEnum",
+    "entries": [
+      {
+        "name": "HOOK_POINT_CATEGORY_UNUSED",
+        "value": 0
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_PET",
+        "value": 1
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_MOUNT_DRIVER",
+        "value": 2
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_LIFTED_ENTITY",
+        "value": 3
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_BASE_BACKGROUND",
+        "value": 4
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_MERCHANT_BAG",
+        "value": 5
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_BASE_FOREGROUND",
+        "value": 6
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_PET_FOLLOWER",
+        "value": 7
+      },
+      {
+        "name": "HOOK_POINT_CATEGORY_UNDERWATER_BUBBLES",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "BuildTypeEnum",
+    "entries": [
+      {
+        "name": "RELEASE",
+        "value": 0
+      },
+      {
+        "name": "BETA",
+        "value": 1
+      },
+      {
+        "name": "ALPHA",
+        "value": 2
+      },
+      {
+        "name": "TESTING",
+        "value": 3
+      },
+      {
+        "name": "INTERNAL",
+        "value": 4
+      },
+      {
+        "name": "DEBUG",
+        "value": 5
+      },
+      {
+        "name": "EXPERIMENTAL",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ChatActivableChannelsEnum",
+    "entries": [
+      {
+        "name": "CHANNEL_GLOBAL",
+        "value": 0
+      },
+      {
+        "name": "CHANNEL_TEAM",
+        "value": 1
+      },
+      {
+        "name": "CHANNEL_GUILD",
+        "value": 2
+      },
+      {
+        "name": "CHANNEL_ALLIANCE",
+        "value": 3
+      },
+      {
+        "name": "CHANNEL_PARTY",
+        "value": 4
+      },
+      {
+        "name": "CHANNEL_SALES",
+        "value": 5
+      },
+      {
+        "name": "CHANNEL_SEEK",
+        "value": 6
+      },
+      {
+        "name": "CHANNEL_NOOB",
+        "value": 7
+      },
+      {
+        "name": "CHANNEL_ADMIN",
+        "value": 8
+      },
+      {
+        "name": "CHANNEL_ADS",
+        "value": 12
+      },
+      {
+        "name": "CHANNEL_ARENA",
+        "value": 13
+      },
+      {
+        "name": "CHANNEL_COMMUNITY",
+        "value": 14
+      },
+      {
+        "name": "PSEUDO_CHANNEL_PRIVATE",
+        "value": 9
+      },
+      {
+        "name": "PSEUDO_CHANNEL_INFO",
+        "value": 10
+      },
+      {
+        "name": "PSEUDO_CHANNEL_FIGHT_LOG",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameActionMarkTypeEnum",
+    "entries": [
+      {
+        "name": "GLYPH",
+        "value": 1
+      },
+      {
+        "name": "TRAP",
+        "value": 2
+      },
+      {
+        "name": "WALL",
+        "value": 3
+      },
+      {
+        "name": "PORTAL",
+        "value": 4
+      },
+      {
+        "name": "RUNE",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FightSpellCastCriticalEnum",
+    "entries": [
+      {
+        "name": "NORMAL",
+        "value": 1
+      },
+      {
+        "name": "CRITICAL_HIT",
+        "value": 2
+      },
+      {
+        "name": "CRITICAL_FAIL",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PlayerLifeStatusEnum",
+    "entries": [
+      {
+        "name": "STATUS_ALIVE_AND_KICKING",
+        "value": 0
+      },
+      {
+        "name": "STATUS_TOMBSTONE",
+        "value": 1
+      },
+      {
+        "name": "STATUS_PHANTOM",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PrismStateEnum",
+    "entries": [
+      {
+        "name": "PRISM_STATE_INVULNERABLE",
+        "value": 0
+      },
+      {
+        "name": "PRISM_STATE_NORMAL",
+        "value": 1
+      },
+      {
+        "name": "PRISM_STATE_ATTACKED",
+        "value": 2
+      },
+      {
+        "name": "PRISM_STATE_FIGHTING",
+        "value": 3
+      },
+      {
+        "name": "PRISM_STATE_WEAKENED",
+        "value": 4
+      },
+      {
+        "name": "PRISM_STATE_VULNERABLE",
+        "value": 5
+      },
+      {
+        "name": "PRISM_STATE_DEFEATED",
+        "value": 6
+      },
+      {
+        "name": "PRISM_STATE_SABOTAGED",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "MapObstacleStateEnum",
+    "entries": [
+      {
+        "name": "OBSTACLE_OPENED",
+        "value": 1
+      },
+      {
+        "name": "OBSTACLE_CLOSED",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "AggressableStatusEnum",
+    "entries": [
+      {
+        "name": "NON_AGGRESSABLE",
+        "value": 0
+      },
+      {
+        "name": "PvP_ENABLED_AGGRESSABLE",
+        "value": 10
+      },
+      {
+        "name": "PvP_ENABLED_NON_AGGRESSABLE",
+        "value": 11
+      },
+      {
+        "name": "AvA_ENABLED_AGGRESSABLE",
+        "value": 20
+      },
+      {
+        "name": "AvA_ENABLED_NON_AGGRESSABLE",
+        "value": 21
+      },
+      {
+        "name": "AvA_DISQUALIFIED",
+        "value": 22
+      },
+      {
+        "name": "AvA_PREQUALIFIED_AGGRESSABLE",
+        "value": 23
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TeamEnum",
+    "entries": [
+      {
+        "name": "TEAM_CHALLENGER",
+        "value": 0
+      },
+      {
+        "name": "TEAM_DEFENDER",
+        "value": 1
+      },
+      {
+        "name": "TEAM_SPECTATOR",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameActionFightInvisibilityStateEnum",
+    "entries": [
+      {
+        "name": "INVISIBLE",
+        "value": 1
+      },
+      {
+        "name": "DETECTED",
+        "value": 2
+      },
+      {
+        "name": "VISIBLE",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CharacterInventoryPositionEnum",
+    "entries": [
+      {
+        "name": "ACCESSORY_POSITION_HAT",
+        "value": 6
+      },
+      {
+        "name": "ACCESSORY_POSITION_CAPE",
+        "value": 7
+      },
+      {
+        "name": "ACCESSORY_POSITION_BELT",
+        "value": 3
+      },
+      {
+        "name": "ACCESSORY_POSITION_BOOTS",
+        "value": 5
+      },
+      {
+        "name": "ACCESSORY_POSITION_AMULET",
+        "value": 0
+      },
+      {
+        "name": "ACCESSORY_POSITION_SHIELD",
+        "value": 15
+      },
+      {
+        "name": "ACCESSORY_POSITION_WEAPON",
+        "value": 1
+      },
+      {
+        "name": "ACCESSORY_POSITION_PETS",
+        "value": 8
+      },
+      {
+        "name": "ACCESSORY_POSITION_RIDE_HARNESS",
+        "value": 29
+      },
+      {
+        "name": "INVENTORY_POSITION_RING_LEFT",
+        "value": 2
+      },
+      {
+        "name": "INVENTORY_POSITION_RING_RIGHT",
+        "value": 4
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_1",
+        "value": 9
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_2",
+        "value": 10
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_3",
+        "value": 11
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_4",
+        "value": 12
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_5",
+        "value": 13
+      },
+      {
+        "name": "INVENTORY_POSITION_DOFUS_6",
+        "value": 14
+      },
+      {
+        "name": "INVENTORY_POSITION_MOUNT",
+        "value": 16
+      },
+      {
+        "name": "INVENTORY_POSITION_MUTATION",
+        "value": 20
+      },
+      {
+        "name": "INVENTORY_POSITION_BOOST_FOOD",
+        "value": 21
+      },
+      {
+        "name": "INVENTORY_POSITION_FIRST_BONUS",
+        "value": 22
+      },
+      {
+        "name": "INVENTORY_POSITION_SECOND_BONUS",
+        "value": 23
+      },
+      {
+        "name": "INVENTORY_POSITION_FIRST_MALUS",
+        "value": 24
+      },
+      {
+        "name": "INVENTORY_POSITION_SECOND_MALUS",
+        "value": 25
+      },
+      {
+        "name": "INVENTORY_POSITION_ROLEPLAY_BUFFER",
+        "value": 26
+      },
+      {
+        "name": "INVENTORY_POSITION_FOLLOWER",
+        "value": 27
+      },
+      {
+        "name": "INVENTORY_POSITION_COMPANION",
+        "value": 28
+      },
+      {
+        "name": "INVENTORY_POSITION_COSTUME",
+        "value": 30
+      },
+      {
+        "name": "INVENTORY_POSITION_NOT_EQUIPED",
+        "value": 63
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FightOutcomeEnum",
+    "entries": [
+      {
+        "name": "RESULT_LOST",
+        "value": 0
+      },
+      {
+        "name": "RESULT_DRAW",
+        "value": 1
+      },
+      {
+        "name": "RESULT_VICTORY",
+        "value": 2
+      },
+      {
+        "name": "RESULT_TAX",
+        "value": 5
+      },
+      {
+        "name": "RESULT_DEFENDER_GROUP",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TextInformationTypeEnum",
+    "entries": [
+      {
+        "name": "TEXT_INFORMATION_MESSAGE",
+        "value": 0
+      },
+      {
+        "name": "TEXT_INFORMATION_ERROR",
+        "value": 1
+      },
+      {
+        "name": "TEXT_INFORMATION_PVP",
+        "value": 2
+      },
+      {
+        "name": "TEXT_INFORMATION_FIGHT_LOG",
+        "value": 3
+      },
+      {
+        "name": "TEXT_INFORMATION_POPUP",
+        "value": 4
+      },
+      {
+        "name": "TEXT_LIVING_OBJECT",
+        "value": 5
+      },
+      {
+        "name": "TEXT_ENTITY_TALK",
+        "value": 6
+      },
+      {
+        "name": "TEXT_INFORMATION_FIGHT",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DareCriteriaTypeEnum",
+    "entries": [
+      {
+        "name": "MONSTER_ID",
+        "value": 0
+      },
+      {
+        "name": "CHALLENGE_ID",
+        "value": 1
+      },
+      {
+        "name": "IDOLS",
+        "value": 2
+      },
+      {
+        "name": "IDOLS_SCORE",
+        "value": 3
+      },
+      {
+        "name": "MAX_CHAR_LVL",
+        "value": 4
+      },
+      {
+        "name": "MAX_FIGHT_TURNS",
+        "value": 5
+      },
+      {
+        "name": "MAX_COUNT_CHAR",
+        "value": 6
+      },
+      {
+        "name": "MIN_COUNT_CHAR",
+        "value": 7
+      },
+      {
+        "name": "FORBIDDEN_BREEDS",
+        "value": 8
+      },
+      {
+        "name": "MANDATORY_BREEDS",
+        "value": 9
+      },
+      {
+        "name": "MIN_COUNT_MONSTERS",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DebugLevelEnum",
+    "entries": [
+      {
+        "name": "LEVEL_TRACE",
+        "value": 0
+      },
+      {
+        "name": "LEVEL_DEBUG",
+        "value": 1
+      },
+      {
+        "name": "LEVEL_INFO",
+        "value": 2
+      },
+      {
+        "name": "LEVEL_WARN",
+        "value": 3
+      },
+      {
+        "name": "LEVEL_ERROR",
+        "value": 4
+      },
+      {
+        "name": "LEVEL_FATAL",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "AlignmentSideEnum",
+    "entries": [
+      {
+        "name": "ALIGNMENT_UNKNOWN",
+        "value": -2
+      },
+      {
+        "name": "ALIGNMENT_WITHOUT",
+        "value": -1
+      },
+      {
+        "name": "ALIGNMENT_NEUTRAL",
+        "value": 0
+      },
+      {
+        "name": "ALIGNMENT_ANGEL",
+        "value": 1
+      },
+      {
+        "name": "ALIGNMENT_EVIL",
+        "value": 2
+      },
+      {
+        "name": "ALIGNMENT_MERCENARY",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ObjectErrorEnum",
+    "entries": [
+      {
+        "name": "INVENTORY_FULL",
+        "value": 1
+      },
+      {
+        "name": "CANNOT_EQUIP_TWICE",
+        "value": 2
+      },
+      {
+        "name": "NOT_TRADABLE",
+        "value": 3
+      },
+      {
+        "name": "CANNOT_DROP",
+        "value": 4
+      },
+      {
+        "name": "CANNOT_DROP_NO_PLACE",
+        "value": 5
+      },
+      {
+        "name": "CANNOT_DESTROY",
+        "value": 6
+      },
+      {
+        "name": "LEVEL_TOO_LOW",
+        "value": 7
+      },
+      {
+        "name": "LIVING_OBJECT_REFUSED_FOOD",
+        "value": 8
+      },
+      {
+        "name": "CANNOT_UNEQUIP",
+        "value": 9
+      },
+      {
+        "name": "CANNOT_EQUIP_HERE",
+        "value": 10
+      },
+      {
+        "name": "CRITERIONS",
+        "value": 11
+      },
+      {
+        "name": "SYMBIOTIC_OBJECT_ERROR",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GuildInformationsTypeEnum",
+    "entries": [
+      {
+        "name": "INFO_GENERAL",
+        "value": 1
+      },
+      {
+        "name": "INFO_MEMBERS",
+        "value": 2
+      },
+      {
+        "name": "INFO_BOOSTS",
+        "value": 3
+      },
+      {
+        "name": "INFO_PADDOCKS",
+        "value": 4
+      },
+      {
+        "name": "INFO_HOUSES",
+        "value": 5
+      },
+      {
+        "name": "INFO_TAX_COLLECTOR_GUILD_ONLY",
+        "value": 6
+      },
+      {
+        "name": "INFO_TAX_COLLECTOR_ALLIANCE",
+        "value": 7
+      },
+      {
+        "name": "INFO_TAX_COLLECTOR_LEAVE",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "IdentificationFailureReasonEnum",
+    "entries": [
+      {
+        "name": "BAD_VERSION",
+        "value": 1
+      },
+      {
+        "name": "WRONG_CREDENTIALS",
+        "value": 2
+      },
+      {
+        "name": "BANNED",
+        "value": 3
+      },
+      {
+        "name": "KICKED",
+        "value": 4
+      },
+      {
+        "name": "IN_MAINTENANCE",
+        "value": 5
+      },
+      {
+        "name": "TOO_MANY_ON_IP",
+        "value": 6
+      },
+      {
+        "name": "TIME_OUT",
+        "value": 7
+      },
+      {
+        "name": "BAD_IPRANGE",
+        "value": 8
+      },
+      {
+        "name": "CREDENTIALS_RESET",
+        "value": 9
+      },
+      {
+        "name": "EMAIL_UNVALIDATED",
+        "value": 10
+      },
+      {
+        "name": "OTP_TIMEOUT",
+        "value": 11
+      },
+      {
+        "name": "LOCKED",
+        "value": 12
+      },
+      {
+        "name": "SERVICE_UNAVAILABLE",
+        "value": 53
+      },
+      {
+        "name": "EXTERNAL_ACCOUNT_LINK_REFUSED",
+        "value": 61
+      },
+      {
+        "name": "EXTERNAL_ACCOUNT_ALREADY_LINKED",
+        "value": 62
+      },
+      {
+        "name": "UNKNOWN_AUTH_ERROR",
+        "value": 99
+      },
+      {
+        "name": "SPARE",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FightOptionsEnum",
+    "entries": [
+      {
+        "name": "FIGHT_OPTION_SET_SECRET",
+        "value": 0
+      },
+      {
+        "name": "FIGHT_OPTION_SET_TO_PARTY_ONLY",
+        "value": 1
+      },
+      {
+        "name": "FIGHT_OPTION_SET_CLOSED",
+        "value": 2
+      },
+      {
+        "name": "FIGHT_OPTION_ASK_FOR_HELP",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PartyJoinErrorEnum",
+    "entries": [
+      {
+        "name": "PARTY_JOIN_ERROR_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_NOT_FOUND",
+        "value": 1
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PARTY_NOT_FOUND",
+        "value": 2
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PARTY_FULL",
+        "value": 3
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_BUSY",
+        "value": 4
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_ALREADY_INVITED",
+        "value": 6
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_TOO_SOLLICITED",
+        "value": 7
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_LOYAL",
+        "value": 8
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_UNMODIFIABLE",
+        "value": 9
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_UNMET_CRITERION",
+        "value": 10
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_NOT_ENOUGH_ROOM",
+        "value": 11
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_COMPOSITION_CHANGED",
+        "value": 12
+      },
+      {
+        "name": "PARTY_JOIN_ERROR_PLAYER_IN_TUTORIAL",
+        "value": 13
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameHierarchyEnum",
+    "entries": [
+      {
+        "name": "UNAVAILABLE",
+        "value": -1
+      },
+      {
+        "name": "PLAYER",
+        "value": 0
+      },
+      {
+        "name": "MODERATOR",
+        "value": 10
+      },
+      {
+        "name": "GAMEMASTER_PADAWAN",
+        "value": 20
+      },
+      {
+        "name": "GAMEMASTER",
+        "value": 30
+      },
+      {
+        "name": "ADMIN",
+        "value": 40
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FightTypeEnum",
+    "entries": [
+      {
+        "name": "FIGHT_TYPE_CHALLENGE",
+        "value": 0
+      },
+      {
+        "name": "FIGHT_TYPE_AGRESSION",
+        "value": 1
+      },
+      {
+        "name": "FIGHT_TYPE_PvMA",
+        "value": 2
+      },
+      {
+        "name": "FIGHT_TYPE_MXvM",
+        "value": 3
+      },
+      {
+        "name": "FIGHT_TYPE_PvM",
+        "value": 4
+      },
+      {
+        "name": "FIGHT_TYPE_PvT",
+        "value": 5
+      },
+      {
+        "name": "FIGHT_TYPE_PvMU",
+        "value": 6
+      },
+      {
+        "name": "FIGHT_TYPE_PVP_ARENA",
+        "value": 7
+      },
+      {
+        "name": "FIGHT_TYPE_Koh",
+        "value": 8
+      },
+      {
+        "name": "FIGHT_TYPE_PvPr",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ExchangeTypeEnum",
+    "entries": [
+      {
+        "name": "NPC_SHOP",
+        "value": 0
+      },
+      {
+        "name": "PLAYER_TRADE",
+        "value": 1
+      },
+      {
+        "name": "NPC_TRADE",
+        "value": 2
+      },
+      {
+        "name": "CRAFT",
+        "value": 3
+      },
+      {
+        "name": "DISCONNECTED_VENDOR",
+        "value": 4
+      },
+      {
+        "name": "STORAGE",
+        "value": 5
+      },
+      {
+        "name": "SHOP_STOCK",
+        "value": 6
+      },
+      {
+        "name": "TAXCOLLECTOR",
+        "value": 8
+      },
+      {
+        "name": "NPC_MODIFY_TRADE",
+        "value": 9
+      },
+      {
+        "name": "BIDHOUSE_SELL",
+        "value": 10
+      },
+      {
+        "name": "BIDHOUSE_BUY",
+        "value": 11
+      },
+      {
+        "name": "MULTICRAFT_CRAFTER",
+        "value": 12
+      },
+      {
+        "name": "MULTICRAFT_CUSTOMER",
+        "value": 13
+      },
+      {
+        "name": "JOB_INDEX",
+        "value": 14
+      },
+      {
+        "name": "MOUNT",
+        "value": 15
+      },
+      {
+        "name": "MOUNT_STABLE",
+        "value": 16
+      },
+      {
+        "name": "NPC_RESURECT_PET",
+        "value": 17
+      },
+      {
+        "name": "NPC_TRADE_DRAGOTURKEY",
+        "value": 18
+      },
+      {
+        "name": "REALESTATE_HOUSE",
+        "value": 19
+      },
+      {
+        "name": "REALESTATE_FARM",
+        "value": 20
+      },
+      {
+        "name": "RUNES_TRADE",
+        "value": 21
+      },
+      {
+        "name": "RECYCLE_TRADE",
+        "value": 22
+      },
+      {
+        "name": "BANK",
+        "value": 23
+      },
+      {
+        "name": "TRASHBIN",
+        "value": 24
+      },
+      {
+        "name": "ALLIANCE_PRISM",
+        "value": 25
+      },
+      {
+        "name": "HAVENBAG",
+        "value": 26
+      },
+      {
+        "name": "NPC_TRADE_SEEMYOOL",
+        "value": 27
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SequenceTypeEnum",
+    "entries": [
+      {
+        "name": "SEQUENCE_SPELL",
+        "value": 1
+      },
+      {
+        "name": "SEQUENCE_WEAPON",
+        "value": 2
+      },
+      {
+        "name": "SEQUENCE_GLYPH_TRAP",
+        "value": 3
+      },
+      {
+        "name": "SEQUENCE_TRIGGERED",
+        "value": 4
+      },
+      {
+        "name": "SEQUENCE_MOVE",
+        "value": 5
+      },
+      {
+        "name": "SEQUENCE_CHARACTER_DEATH",
+        "value": 6
+      },
+      {
+        "name": "SEQUENCE_TURN_START",
+        "value": 7
+      },
+      {
+        "name": "SEQUENCE_TURN_END",
+        "value": 8
+      },
+      {
+        "name": "SEQUENCE_FIGHT_START",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ExchangeErrorEnum",
+    "entries": [
+      {
+        "name": "REQUEST_IMPOSSIBLE",
+        "value": 1
+      },
+      {
+        "name": "REQUEST_CHARACTER_OCCUPIED",
+        "value": 2
+      },
+      {
+        "name": "REQUEST_CHARACTER_JOB_NOT_EQUIPED",
+        "value": 3
+      },
+      {
+        "name": "REQUEST_CHARACTER_TOOL_TOO_FAR",
+        "value": 4
+      },
+      {
+        "name": "REQUEST_CHARACTER_OVERLOADED",
+        "value": 5
+      },
+      {
+        "name": "REQUEST_CHARACTER_NOT_SUSCRIBER",
+        "value": 6
+      },
+      {
+        "name": "REQUEST_CHARACTER_RESTRICTED",
+        "value": 7
+      },
+      {
+        "name": "REQUEST_CHARACTER_GUEST",
+        "value": 8
+      },
+      {
+        "name": "SELL_ERROR",
+        "value": 63
+      },
+      {
+        "name": "BUY_ERROR",
+        "value": 64
+      },
+      {
+        "name": "MOUNT_PADDOCK_ERROR",
+        "value": 10
+      },
+      {
+        "name": "BID_SEARCH_ERROR",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameContextEnum",
+    "entries": [
+      {
+        "name": "ROLE_PLAY",
+        "value": 1
+      },
+      {
+        "name": "FIGHT",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SocialGroupCreationResultEnum",
+    "entries": [
+      {
+        "name": "SOCIAL_GROUP_CREATE_OK",
+        "value": 1
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_NAME_INVALID",
+        "value": 2
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_ALREADY_IN_GROUP",
+        "value": 3
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_NAME_ALREADY_EXISTS",
+        "value": 4
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_EMBLEM_ALREADY_EXISTS",
+        "value": 5
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_LEAVE",
+        "value": 6
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_CANCEL",
+        "value": 7
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_REQUIREMENT_UNMET",
+        "value": 8
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_EMBLEM_INVALID",
+        "value": 9
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_TAG_INVALID",
+        "value": 10
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_TAG_ALREADY_EXISTS",
+        "value": 11
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_NEEDS_SUBGROUP",
+        "value": 12
+      },
+      {
+        "name": "SOCIAL_GROUP_CREATE_ERROR_UNKNOWN",
+        "value": 99
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TaxCollectorErrorReasonEnum",
+    "entries": [
+      {
+        "name": "TAX_COLLECTOR_ERROR_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "TAX_COLLECTOR_NOT_FOUND",
+        "value": 1
+      },
+      {
+        "name": "TAX_COLLECTOR_NOT_OWNED",
+        "value": 2
+      },
+      {
+        "name": "TAX_COLLECTOR_NO_RIGHTS",
+        "value": 3
+      },
+      {
+        "name": "TAX_COLLECTOR_MAX_REACHED",
+        "value": 4
+      },
+      {
+        "name": "TAX_COLLECTOR_ALREADY_ONE",
+        "value": 5
+      },
+      {
+        "name": "TAX_COLLECTOR_CANT_HIRE_YET",
+        "value": 6
+      },
+      {
+        "name": "TAX_COLLECTOR_CANT_HIRE_HERE",
+        "value": 7
+      },
+      {
+        "name": "TAX_COLLECTOR_NOT_ENOUGH_KAMAS",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "HardcoreOrEpicDeathStateEnum",
+    "entries": [
+      {
+        "name": "DEATH_STATE_ALIVE",
+        "value": 0
+      },
+      {
+        "name": "DEATH_STATE_DEAD",
+        "value": 1
+      },
+      {
+        "name": "DEATH_STATE_WAITING_CONFIRMATION",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CompassTypeEnum",
+    "entries": [
+      {
+        "name": "COMPASS_TYPE_SIMPLE",
+        "value": 0
+      },
+      {
+        "name": "COMPASS_TYPE_SPOUSE",
+        "value": 1
+      },
+      {
+        "name": "COMPASS_TYPE_PARTY",
+        "value": 2
+      },
+      {
+        "name": "COMPASS_TYPE_PVP_SEEK",
+        "value": 3
+      },
+      {
+        "name": "COMPASS_TYPE_QUEST",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "BreedEnum",
+    "entries": [
+      {
+        "name": "UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "Feca",
+        "value": 1
+      },
+      {
+        "name": "Osamodas",
+        "value": 2
+      },
+      {
+        "name": "Enutrof",
+        "value": 3
+      },
+      {
+        "name": "Sram",
+        "value": 4
+      },
+      {
+        "name": "Xelor",
+        "value": 5
+      },
+      {
+        "name": "Ecaflip",
+        "value": 6
+      },
+      {
+        "name": "Eniripsa",
+        "value": 7
+      },
+      {
+        "name": "Iop",
+        "value": 8
+      },
+      {
+        "name": "Cra",
+        "value": 9
+      },
+      {
+        "name": "Sadida",
+        "value": 10
+      },
+      {
+        "name": "Sacrieur",
+        "value": 11
+      },
+      {
+        "name": "Pandawa",
+        "value": 12
+      },
+      {
+        "name": "Roublard",
+        "value": 13
+      },
+      {
+        "name": "Zobal",
+        "value": 14
+      },
+      {
+        "name": "Steamer",
+        "value": 15
+      },
+      {
+        "name": "Eliotrope",
+        "value": 16
+      },
+      {
+        "name": "Huppermage",
+        "value": 17
+      },
+      {
+        "name": "Ouginak",
+        "value": 18
+      },
+      {
+        "name": "SUMMONED",
+        "value": -1
+      },
+      {
+        "name": "MONSTER",
+        "value": -2
+      },
+      {
+        "name": "MONSTER_GROUP",
+        "value": -3
+      },
+      {
+        "name": "NPC",
+        "value": -4
+      },
+      {
+        "name": "HUMAN_VENDOR",
+        "value": -5
+      },
+      {
+        "name": "TAX_COLLECTOR",
+        "value": -6
+      },
+      {
+        "name": "MUTANT",
+        "value": -7
+      },
+      {
+        "name": "MUTANT_IN_DUNGEON",
+        "value": -8
+      },
+      {
+        "name": "MOUNT_OUTSIDE",
+        "value": -9
+      },
+      {
+        "name": "PRISM",
+        "value": -10
+      },
+      {
+        "name": "INCARNATION",
+        "value": -11
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PlayerStateEnum",
+    "entries": [
+      {
+        "name": "NOT_CONNECTED",
+        "value": 0
+      },
+      {
+        "name": "GAME_TYPE_ROLEPLAY",
+        "value": 1
+      },
+      {
+        "name": "GAME_TYPE_FIGHT",
+        "value": 2
+      },
+      {
+        "name": "UNKNOWN_STATE",
+        "value": 99
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SocialGroupInvitationStateEnum",
+    "entries": [
+      {
+        "name": "SOCIAL_GROUP_INVITATION_FAILED",
+        "value": 0
+      },
+      {
+        "name": "SOCIAL_GROUP_INVITATION_SENT",
+        "value": 1
+      },
+      {
+        "name": "SOCIAL_GROUP_INVITATION_CANCELED",
+        "value": 2
+      },
+      {
+        "name": "SOCIAL_GROUP_INVITATION_OK",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PlayableBreedEnum",
+    "entries": [
+      {
+        "name": "UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "Feca",
+        "value": 1
+      },
+      {
+        "name": "Osamodas",
+        "value": 2
+      },
+      {
+        "name": "Enutrof",
+        "value": 3
+      },
+      {
+        "name": "Sram",
+        "value": 4
+      },
+      {
+        "name": "Xelor",
+        "value": 5
+      },
+      {
+        "name": "Ecaflip",
+        "value": 6
+      },
+      {
+        "name": "Eniripsa",
+        "value": 7
+      },
+      {
+        "name": "Iop",
+        "value": 8
+      },
+      {
+        "name": "Cra",
+        "value": 9
+      },
+      {
+        "name": "Sadida",
+        "value": 10
+      },
+      {
+        "name": "Sacrieur",
+        "value": 11
+      },
+      {
+        "name": "Pandawa",
+        "value": 12
+      },
+      {
+        "name": "Roublard",
+        "value": 13
+      },
+      {
+        "name": "Zobal",
+        "value": 14
+      },
+      {
+        "name": "Steamer",
+        "value": 15
+      },
+      {
+        "name": "Eliotrope",
+        "value": 16
+      },
+      {
+        "name": "Huppermage",
+        "value": 17
+      },
+      {
+        "name": "Ouginak",
+        "value": 18
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DirectionsEnum",
+    "entries": [
+      {
+        "name": "DIRECTION_EAST",
+        "value": 0
+      },
+      {
+        "name": "DIRECTION_SOUTH_EAST",
+        "value": 1
+      },
+      {
+        "name": "DIRECTION_SOUTH",
+        "value": 2
+      },
+      {
+        "name": "DIRECTION_SOUTH_WEST",
+        "value": 3
+      },
+      {
+        "name": "DIRECTION_WEST",
+        "value": 4
+      },
+      {
+        "name": "DIRECTION_NORTH_WEST",
+        "value": 5
+      },
+      {
+        "name": "DIRECTION_NORTH",
+        "value": 6
+      },
+      {
+        "name": "DIRECTION_NORTH_EAST",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ConsoleMessageTypeEnum",
+    "entries": [
+      {
+        "name": "CONSOLE_TEXT_MESSAGE",
+        "value": 0
+      },
+      {
+        "name": "CONSOLE_INFO_MESSAGE",
+        "value": 1
+      },
+      {
+        "name": "CONSOLE_ERR_MESSAGE",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ServerStatusEnum",
+    "entries": [
+      {
+        "name": "STATUS_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "OFFLINE",
+        "value": 1
+      },
+      {
+        "name": "STARTING",
+        "value": 2
+      },
+      {
+        "name": "ONLINE",
+        "value": 3
+      },
+      {
+        "name": "NOJOIN",
+        "value": 4
+      },
+      {
+        "name": "SAVING",
+        "value": 5
+      },
+      {
+        "name": "STOPING",
+        "value": 6
+      },
+      {
+        "name": "FULL",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ChatErrorEnum",
+    "entries": [
+      {
+        "name": "CHAT_ERROR_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "CHAT_ERROR_RECEIVER_NOT_FOUND",
+        "value": 1
+      },
+      {
+        "name": "CHAT_ERROR_INTERIOR_MONOLOGUE",
+        "value": 2
+      },
+      {
+        "name": "CHAT_ERROR_NO_GUILD",
+        "value": 3
+      },
+      {
+        "name": "CHAT_ERROR_NO_PARTY",
+        "value": 4
+      },
+      {
+        "name": "CHAT_ERROR_ALLIANCE",
+        "value": 5
+      },
+      {
+        "name": "CHAT_ERROR_INVALID_MAP",
+        "value": 6
+      },
+      {
+        "name": "CHAT_ERROR_NO_PARTY_ARENA",
+        "value": 7
+      },
+      {
+        "name": "CHAT_ERROR_NO_TEAM",
+        "value": 8
+      },
+      {
+        "name": "CHAT_ERROR_MALFORMED_CONTENT",
+        "value": 9
+      },
+      {
+        "name": "CHAT_ERROR_NO_CHANNEL_COMMUNITY",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "NicknameGeneratingFailureEnum",
+    "entries": [
+      {
+        "name": "NICKNAME_GENERATOR_RETRY_TOO_SHORT",
+        "value": 1
+      },
+      {
+        "name": "NICKNAME_GENERATOR_UNAVAILABLE",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ListAddFailureEnum",
+    "entries": [
+      {
+        "name": "LIST_ADD_FAILURE_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "LIST_ADD_FAILURE_OVER_QUOTA",
+        "value": 1
+      },
+      {
+        "name": "LIST_ADD_FAILURE_NOT_FOUND",
+        "value": 2
+      },
+      {
+        "name": "LIST_ADD_FAILURE_EGOCENTRIC",
+        "value": 3
+      },
+      {
+        "name": "LIST_ADD_FAILURE_IS_DOUBLE",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CharacterCreationResultEnum",
+    "entries": [
+      {
+        "name": "OK",
+        "value": 0
+      },
+      {
+        "name": "ERR_NO_REASON",
+        "value": 1
+      },
+      {
+        "name": "ERR_INVALID_NAME",
+        "value": 2
+      },
+      {
+        "name": "ERR_NAME_ALREADY_EXISTS",
+        "value": 3
+      },
+      {
+        "name": "ERR_TOO_MANY_CHARACTERS",
+        "value": 4
+      },
+      {
+        "name": "ERR_NOT_ALLOWED",
+        "value": 5
+      },
+      {
+        "name": "ERR_NEW_PLAYER_NOT_ALLOWED",
+        "value": 6
+      },
+      {
+        "name": "ERR_RESTRICED_ZONE",
+        "value": 7
+      },
+      {
+        "name": "ERR_INCONSISTENT_COMMUNITY",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ServerConnectionErrorEnum",
+    "entries": [
+      {
+        "name": "SERVER_CONNECTION_ERROR_DUE_TO_STATUS",
+        "value": 0
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_NO_REASON",
+        "value": 1
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_ACCOUNT_RESTRICTED",
+        "value": 2
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_COMMUNITY_RESTRICTED",
+        "value": 3
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_LOCATION_RESTRICTED",
+        "value": 4
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_SUBSCRIBERS_ONLY",
+        "value": 5
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_REGULAR_PLAYERS_ONLY",
+        "value": 6
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_MONOACCOUNT_CANNOT_VERIFY",
+        "value": 7
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_MONOACCOUNT_ONLY",
+        "value": 8
+      },
+      {
+        "name": "SERVER_CONNECTION_ERROR_SERVER_OVERLOAD",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SubscriptionRequiredEnum",
+    "entries": [
+      {
+        "name": "LIMITED_TO_SUBSCRIBER",
+        "value": 0
+      },
+      {
+        "name": "LIMIT_ON_JOB_XP",
+        "value": 1
+      },
+      {
+        "name": "LIMIT_ON_JOB_USE",
+        "value": 2
+      },
+      {
+        "name": "LIMIT_ON_MAP",
+        "value": 3
+      },
+      {
+        "name": "LIMIT_ON_ITEM",
+        "value": 4
+      },
+      {
+        "name": "LIMIT_ON_VENDOR",
+        "value": 5
+      },
+      {
+        "name": "LIMIT_ON_HAVENBAG",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "NicknameErrorEnum",
+    "entries": [
+      {
+        "name": "ALREADY_USED",
+        "value": 1
+      },
+      {
+        "name": "SAME_AS_LOGIN",
+        "value": 2
+      },
+      {
+        "name": "TOO_SIMILAR_TO_LOGIN",
+        "value": 3
+      },
+      {
+        "name": "INVALID_NICK",
+        "value": 4
+      },
+      {
+        "name": "UNKNOWN_NICK_ERROR",
+        "value": 99
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ClientInstallTypeEnum",
+    "entries": [
+      {
+        "name": "CLIENT_INSTALL_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "CLIENT_BUNDLE",
+        "value": 1
+      },
+      {
+        "name": "CLIENT_STREAMING",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ClientTechnologyEnum",
+    "entries": [
+      {
+        "name": "CLIENT_TECHNOLOGY_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "CLIENT_AIR",
+        "value": 1
+      },
+      {
+        "name": "CLIENT_FLASH",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CharacterSpellModificationTypeEnum",
+    "entries": [
+      {
+        "name": "INVALID_MODIFICATION",
+        "value": 0
+      },
+      {
+        "name": "RANGEABLE",
+        "value": 1
+      },
+      {
+        "name": "DAMAGE",
+        "value": 2
+      },
+      {
+        "name": "BASE_DAMAGE",
+        "value": 3
+      },
+      {
+        "name": "HEAL_BONUS",
+        "value": 4
+      },
+      {
+        "name": "AP_COST",
+        "value": 5
+      },
+      {
+        "name": "CAST_INTERVAL",
+        "value": 6
+      },
+      {
+        "name": "CAST_INTERVAL_SET",
+        "value": 7
+      },
+      {
+        "name": "CRITICAL_HIT_BONUS",
+        "value": 8
+      },
+      {
+        "name": "CAST_LINE",
+        "value": 9
+      },
+      {
+        "name": "LOS",
+        "value": 10
+      },
+      {
+        "name": "MAX_CAST_PER_TURN",
+        "value": 11
+      },
+      {
+        "name": "MAX_CAST_PER_TARGET",
+        "value": 12
+      },
+      {
+        "name": "RANGE",
+        "value": 13
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ShortcutBarEnum",
+    "entries": [
+      {
+        "name": "GENERAL_SHORTCUT_BAR",
+        "value": 0
+      },
+      {
+        "name": "SPELL_SHORTCUT_BAR",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ServerCompletionEnum",
+    "entries": [
+      {
+        "name": "COMPLETION_RECOMANDATED",
+        "value": 0
+      },
+      {
+        "name": "COMPLETION_AVERAGE",
+        "value": 1
+      },
+      {
+        "name": "COMPLETION_HIGH",
+        "value": 2
+      },
+      {
+        "name": "COMPLETION_COMING_SOON",
+        "value": 3
+      },
+      {
+        "name": "COMPLETION_FULL",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "BoostableCharacteristicEnum",
+    "entries": [
+      {
+        "name": "BOOSTABLE_CHARAC_STRENGTH",
+        "value": 10
+      },
+      {
+        "name": "BOOSTABLE_CHARAC_VITALITY",
+        "value": 11
+      },
+      {
+        "name": "BOOSTABLE_CHARAC_WISDOM",
+        "value": 12
+      },
+      {
+        "name": "BOOSTABLE_CHARAC_CHANCE",
+        "value": 13
+      },
+      {
+        "name": "BOOSTABLE_CHARAC_AGILITY",
+        "value": 14
+      },
+      {
+        "name": "BOOSTABLE_CHARAC_INTELLIGENCE",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "MountCharacteristicEnum",
+    "entries": [
+      {
+        "name": "ENERGY",
+        "value": 1
+      },
+      {
+        "name": "SERENITY",
+        "value": 2
+      },
+      {
+        "name": "STAMINA",
+        "value": 3
+      },
+      {
+        "name": "LOVE",
+        "value": 4
+      },
+      {
+        "name": "MATURITY",
+        "value": 5
+      },
+      {
+        "name": "TIREDNESS",
+        "value": 6
+      },
+      {
+        "name": "CARRIER",
+        "value": 7
+      },
+      {
+        "name": "FERTILE",
+        "value": 8
+      },
+      {
+        "name": "PREGNANT",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FighterRefusedReasonEnum",
+    "entries": [
+      {
+        "name": "FIGHTER_REFUSED",
+        "value": -1
+      },
+      {
+        "name": "FIGHTER_ACCEPTED",
+        "value": 0
+      },
+      {
+        "name": "CHALLENGE_FULL",
+        "value": 1
+      },
+      {
+        "name": "TEAM_FULL",
+        "value": 2
+      },
+      {
+        "name": "WRONG_ALIGNMENT",
+        "value": 3
+      },
+      {
+        "name": "WRONG_GUILD",
+        "value": 4
+      },
+      {
+        "name": "TOO_LATE",
+        "value": 5
+      },
+      {
+        "name": "MUTANT_REFUSED",
+        "value": 6
+      },
+      {
+        "name": "WRONG_MAP",
+        "value": 7
+      },
+      {
+        "name": "JUST_RESPAWNED",
+        "value": 8
+      },
+      {
+        "name": "IM_OCCUPIED",
+        "value": 9
+      },
+      {
+        "name": "OPPONENT_OCCUPIED",
+        "value": 10
+      },
+      {
+        "name": "FIGHT_MYSELF",
+        "value": 11
+      },
+      {
+        "name": "INSUFFICIENT_RIGHTS",
+        "value": 12
+      },
+      {
+        "name": "MEMBER_ACCOUNT_NEEDED",
+        "value": 13
+      },
+      {
+        "name": "OPPONENT_NOT_MEMBER",
+        "value": 14
+      },
+      {
+        "name": "TEAM_LIMITED_BY_MAINCHARACTER",
+        "value": 15
+      },
+      {
+        "name": "MULTIACCOUNT_NOT_ALLOWED",
+        "value": 16
+      },
+      {
+        "name": "GHOST_REFUSED",
+        "value": 17
+      },
+      {
+        "name": "RESTRICTED_ACCOUNT",
+        "value": 19
+      },
+      {
+        "name": "WRONG_ALLIANCE",
+        "value": 20
+      },
+      {
+        "name": "AVA_ZONE",
+        "value": 21
+      },
+      {
+        "name": "COMPANION_REFUSED",
+        "value": 22
+      },
+      {
+        "name": "NOT_ENOUGH_ROOM",
+        "value": 23
+      },
+      {
+        "name": "GUEST_ACCOUNT",
+        "value": 24
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CraftResultEnum",
+    "entries": [
+      {
+        "name": "CRAFT_IMPOSSIBLE",
+        "value": 0
+      },
+      {
+        "name": "CRAFT_FAILED",
+        "value": 1
+      },
+      {
+        "name": "CRAFT_SUCCESS",
+        "value": 2
+      },
+      {
+        "name": "CRAFT_NEUTRAL",
+        "value": 3
+      },
+      {
+        "name": "CRAFT_FORBIDDEN",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DelayedActionTypeEnum",
+    "entries": [
+      {
+        "name": "DELAYED_ACTION_DISCONNECT",
+        "value": 0
+      },
+      {
+        "name": "DELAYED_ACTION_OBJECT_USE",
+        "value": 1
+      },
+      {
+        "name": "DELAYED_ACTION_JOIN_CHARACTER",
+        "value": 2
+      },
+      {
+        "name": "DELAYED_ACTION_AGGRESSION_IMMUNE",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SocialNoticeErrorEnum",
+    "entries": [
+      {
+        "name": "SOCIAL_NOTICE_UNKNOWN_ERROR",
+        "value": 0
+      },
+      {
+        "name": "SOCIAL_NOTICE_INVALID_RIGHTS",
+        "value": 1
+      },
+      {
+        "name": "SOCIAL_NOTICE_COOLDOWN",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TaxCollectorMovementTypeEnum",
+    "entries": [
+      {
+        "name": "TAX_COLLECTOR_UNKNOWN_ACTION",
+        "value": 0
+      },
+      {
+        "name": "TAX_COLLECTOR_HIRED",
+        "value": 1
+      },
+      {
+        "name": "TAX_COLLECTOR_HARVESTED",
+        "value": 2
+      },
+      {
+        "name": "TAX_COLLECTOR_DEFEATED",
+        "value": 3
+      },
+      {
+        "name": "TAX_COLLECTOR_DESTROYED",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TaxCollectorStateEnum",
+    "entries": [
+      {
+        "name": "STATE_COLLECTING",
+        "value": 0
+      },
+      {
+        "name": "STATE_WAITING_FOR_HELP",
+        "value": 1
+      },
+      {
+        "name": "STATE_FIGHTING",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ChatChannelsMultiEnum",
+    "entries": [
+      {
+        "name": "CHANNEL_GLOBAL",
+        "value": 0
+      },
+      {
+        "name": "CHANNEL_TEAM",
+        "value": 1
+      },
+      {
+        "name": "CHANNEL_GUILD",
+        "value": 2
+      },
+      {
+        "name": "CHANNEL_ALLIANCE",
+        "value": 3
+      },
+      {
+        "name": "CHANNEL_PARTY",
+        "value": 4
+      },
+      {
+        "name": "CHANNEL_SALES",
+        "value": 5
+      },
+      {
+        "name": "CHANNEL_SEEK",
+        "value": 6
+      },
+      {
+        "name": "CHANNEL_NOOB",
+        "value": 7
+      },
+      {
+        "name": "CHANNEL_ADMIN",
+        "value": 8
+      },
+      {
+        "name": "CHANNEL_ADS",
+        "value": 12
+      },
+      {
+        "name": "CHANNEL_ARENA",
+        "value": 13
+      },
+      {
+        "name": "CHANNEL_COMMUNITY",
+        "value": 14
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PrismSetSabotagedRefusedReasonEnum",
+    "entries": [
+      {
+        "name": "SABOTAGE_REFUSED",
+        "value": -1
+      },
+      {
+        "name": "SABOTAGE_INSUFFICIENT_RIGHTS",
+        "value": 0
+      },
+      {
+        "name": "SABOTAGE_MEMBER_ACCOUNT_NEEDED",
+        "value": 1
+      },
+      {
+        "name": "SABOTAGE_RESTRICTED_ACCOUNT",
+        "value": 2
+      },
+      {
+        "name": "SABOTAGE_WRONG_ALLIANCE",
+        "value": 3
+      },
+      {
+        "name": "SABOTAGE_NO_PRISM",
+        "value": 4
+      },
+      {
+        "name": "SABOTAGE_WRONG_STATE",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PrismListenEnum",
+    "entries": [
+      {
+        "name": "PRISM_LISTEN_NONE",
+        "value": 0
+      },
+      {
+        "name": "PRISM_LISTEN_MINE",
+        "value": 1
+      },
+      {
+        "name": "PRISM_LISTEN_ALL",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PartyTypeEnum",
+    "entries": [
+      {
+        "name": "PARTY_TYPE_UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "PARTY_TYPE_CLASSICAL",
+        "value": 1
+      },
+      {
+        "name": "PARTY_TYPE_DUNGEON",
+        "value": 2
+      },
+      {
+        "name": "PARTY_TYPE_ARENA",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PvpArenaTypeEnum",
+    "entries": [
+      {
+        "name": "ARENA_TYPE_1VS1",
+        "value": 1
+      },
+      {
+        "name": "ARENA_TYPE_3VS3",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PvpArenaStepEnum",
+    "entries": [
+      {
+        "name": "ARENA_STEP_REGISTRED",
+        "value": 0
+      },
+      {
+        "name": "ARENA_STEP_WAITING_FIGHT",
+        "value": 1
+      },
+      {
+        "name": "ARENA_STEP_STARTING_FIGHT",
+        "value": 2
+      },
+      {
+        "name": "ARENA_STEP_UNREGISTER",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PartyNameErrorEnum",
+    "entries": [
+      {
+        "name": "PARTY_NAME_UNDEFINED_ERROR",
+        "value": 0
+      },
+      {
+        "name": "PARTY_NAME_INVALID",
+        "value": 1
+      },
+      {
+        "name": "PARTY_NAME_ALREADY_USED",
+        "value": 2
+      },
+      {
+        "name": "PARTY_NAME_UNALLOWED_RIGHTS",
+        "value": 3
+      },
+      {
+        "name": "PARTY_NAME_UNALLOWED_NOW",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "FightDispellableEnum",
+    "entries": [
+      {
+        "name": "DISPELLABLE",
+        "value": 1
+      },
+      {
+        "name": "DISPELLABLE_BY_DEATH",
+        "value": 2
+      },
+      {
+        "name": "DISPELLABLE_BY_STRONG_DISPEL",
+        "value": 3
+      },
+      {
+        "name": "REALLY_NOT_DISPELLABLE",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameActionMarkCellsTypeEnum",
+    "entries": [
+      {
+        "name": "CELLS_CIRCLE",
+        "value": 0
+      },
+      {
+        "name": "CELLS_CROSS",
+        "value": 1
+      },
+      {
+        "name": "CELLS_SQUARE",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TeamTypeEnum",
+    "entries": [
+      {
+        "name": "TEAM_TYPE_PLAYER",
+        "value": 0
+      },
+      {
+        "name": "TEAM_TYPE_MONSTER",
+        "value": 1
+      },
+      {
+        "name": "TEAM_TYPE_MUTANT",
+        "value": 2
+      },
+      {
+        "name": "TEAM_TYPE_TAXCOLLECTOR",
+        "value": 3
+      },
+      {
+        "name": "TEAM_TYPE_BAD_PLAYER",
+        "value": 4
+      },
+      {
+        "name": "TEAM_TYPE_PRISM",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "HavenBagDailyLoteryErrorEnum",
+    "entries": [
+      {
+        "name": "HAVENBAG_DAILY_LOTERY_OK",
+        "value": 0
+      },
+      {
+        "name": "HAVENBAG_DAILY_LOTERY_ALREADYUSED",
+        "value": 1
+      },
+      {
+        "name": "HAVENBAG_DAILY_LOTERY_ERROR",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TreasureHuntFlagRequestEnum",
+    "entries": [
+      {
+        "name": "TREASURE_HUNT_FLAG_ERROR_UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_OK",
+        "value": 1
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_WRONG",
+        "value": 2
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_TOO_MANY",
+        "value": 3
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_ERROR_IMPOSSIBLE",
+        "value": 4
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_WRONG_INDEX",
+        "value": 5
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_SAME_MAP",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TreasureHuntDigRequestEnum",
+    "entries": [
+      {
+        "name": "TREASURE_HUNT_DIG_ERROR_UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_NEW_HINT",
+        "value": 1
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_FINISHED",
+        "value": 2
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_WRONG",
+        "value": 3
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_LOST",
+        "value": 4
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_ERROR_IMPOSSIBLE",
+        "value": 5
+      },
+      {
+        "name": "TREASURE_HUNT_DIG_WRONG_AND_YOU_KNOW_IT",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TreasureHuntFlagStateEnum",
+    "entries": [
+      {
+        "name": "TREASURE_HUNT_FLAG_STATE_UNKNOWN",
+        "value": 0
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_STATE_OK",
+        "value": 1
+      },
+      {
+        "name": "TREASURE_HUNT_FLAG_STATE_WRONG",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TreasureHuntRequestEnum",
+    "entries": [
+      {
+        "name": "TREASURE_HUNT_ERROR_UNDEFINED",
+        "value": 0
+      },
+      {
+        "name": "TREASURE_HUNT_ERROR_NO_QUEST_FOUND",
+        "value": 2
+      },
+      {
+        "name": "TREASURE_HUNT_ERROR_ALREADY_HAVE_QUEST",
+        "value": 3
+      },
+      {
+        "name": "TREASURE_HUNT_ERROR_NOT_AVAILABLE",
+        "value": 4
+      },
+      {
+        "name": "TREASURE_HUNT_ERROR_DAILY_LIMIT_EXCEEDED",
+        "value": 5
+      },
+      {
+        "name": "TREASURE_HUNT_OK",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TreasureHuntTypeEnum",
+    "entries": [
+      {
+        "name": "TREASURE_HUNT_CLASSIC",
+        "value": 0
+      },
+      {
+        "name": "TREASURE_HUNT_PORTAL",
+        "value": 1
+      },
+      {
+        "name": "TREASURE_HUNT_LEGENDARY",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CharacterDeletionErrorEnum",
+    "entries": [
+      {
+        "name": "DEL_ERR_NO_REASON",
+        "value": 1
+      },
+      {
+        "name": "DEL_ERR_TOO_MANY_CHAR_DELETION",
+        "value": 2
+      },
+      {
+        "name": "DEL_ERR_BAD_SECRET_ANSWER",
+        "value": 3
+      },
+      {
+        "name": "DEL_ERR_RESTRICED_ZONE",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "CharacterRemodelingEnum",
+    "entries": [
+      {
+        "name": "CHARACTER_REMODELING_NOT_APPLICABLE",
+        "value": 0
+      },
+      {
+        "name": "CHARACTER_REMODELING_NAME",
+        "value": 1
+      },
+      {
+        "name": "CHARACTER_REMODELING_COLORS",
+        "value": 2
+      },
+      {
+        "name": "CHARACTER_REMODELING_COSMETIC",
+        "value": 4
+      },
+      {
+        "name": "CHARACTER_REMODELING_BREED",
+        "value": 8
+      },
+      {
+        "name": "CHARACTER_REMODELING_GENDER",
+        "value": 16
+      },
+      {
+        "name": "CHARACTER_OPT_REMODELING_NAME",
+        "value": 32
+      },
+      {
+        "name": "CHARACTER_OPT_REMODELING_ALL",
+        "value": 64
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "HaapiAuthTypeEnum",
+    "entries": [
+      {
+        "name": "HAAPI_API_KEY",
+        "value": 0
+      },
+      {
+        "name": "HAAPI_TOKEN",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "HaapiSessionTypeEnum",
+    "entries": [
+      {
+        "name": "HAAPI_ACCOUNT_SESSION",
+        "value": 0
+      },
+      {
+        "name": "HAAPI_GAME_SESSION",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "StatsUpgradeResultEnum",
+    "entries": [
+      {
+        "name": "NONE",
+        "value": -1
+      },
+      {
+        "name": "SUCCESS",
+        "value": 0
+      },
+      {
+        "name": "RESTRICTED",
+        "value": 1
+      },
+      {
+        "name": "GUEST",
+        "value": 2
+      },
+      {
+        "name": "IN_FIGHT",
+        "value": 3
+      },
+      {
+        "name": "NOT_ENOUGH_POINT",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DareErrorEnum",
+    "entries": [
+      {
+        "name": "UKNOWN_ERROR",
+        "value": 0
+      },
+      {
+        "name": "DARE_CREATION_FAILED",
+        "value": 1
+      },
+      {
+        "name": "DARE_UNKNOWN",
+        "value": 2
+      },
+      {
+        "name": "DARE_CANT_CANCEL",
+        "value": 3
+      },
+      {
+        "name": "DARE_REWARD_UNKNOWN",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "DialogTypeEnum",
+    "entries": [
+      {
+        "name": "DIALOG_BOOK",
+        "value": 0
+      },
+      {
+        "name": "DIALOG_DIALOG",
+        "value": 1
+      },
+      {
+        "name": "DIALOG_LOCKABLE",
+        "value": 2
+      },
+      {
+        "name": "DIALOG_PURCHASABLE",
+        "value": 3
+      },
+      {
+        "name": "DIALOG_GUILD_INVITATION",
+        "value": 4
+      },
+      {
+        "name": "DIALOG_GUILD_CREATE",
+        "value": 5
+      },
+      {
+        "name": "DIALOG_GUILD_RENAME",
+        "value": 6
+      },
+      {
+        "name": "DIALOG_MARRIAGE",
+        "value": 7
+      },
+      {
+        "name": "DIALOG_DUNGEON_MEETING",
+        "value": 8
+      },
+      {
+        "name": "DIALOG_SPELL_FORGET",
+        "value": 9
+      },
+      {
+        "name": "DIALOG_TELEPORTER",
+        "value": 10
+      },
+      {
+        "name": "DIALOG_EXCHANGE",
+        "value": 11
+      },
+      {
+        "name": "DIALOG_ALLIANCE_INVITATION",
+        "value": 12
+      },
+      {
+        "name": "DIALOG_ALLIANCE_CREATE",
+        "value": 13
+      },
+      {
+        "name": "DIALOG_ALLIANCE_RENAME",
+        "value": 14
+      },
+      {
+        "name": "DIALOG_HAVENBAG_MEETING",
+        "value": 15
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "TeleporterTypeEnum",
+    "entries": [
+      {
+        "name": "TELEPORTER_ZAAP",
+        "value": 0
+      },
+      {
+        "name": "TELEPORTER_SUBWAY",
+        "value": 1
+      },
+      {
+        "name": "TELEPORTER_PRISM",
+        "value": 2
+      },
+      {
+        "name": "TELEPORTER_HAVENBAG",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "SocialContactCategoryEnum",
+    "entries": [
+      {
+        "name": "SOCIAL_CONTACT_FRIEND",
+        "value": 0
+      },
+      {
+        "name": "SOCIAL_CONTACT_SPOUSE",
+        "value": 1
+      },
+      {
+        "name": "SOCIAL_CONTACT_PARTY",
+        "value": 2
+      },
+      {
+        "name": "SOCIAL_CONTACT_GUILD",
+        "value": 3
+      },
+      {
+        "name": "SOCIAL_CONTACT_ALLIANCE",
+        "value": 4
+      },
+      {
+        "name": "SOCIAL_CONTACT_CRAFTER",
+        "value": 5
+      },
+      {
+        "name": "SOCIAL_CONTACT_INTERLOCUTOR",
+        "value": 6
+      },
+      {
+        "name": "SOCIAL_CONTACT_FIGHT",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "ExchangeReplayStopReasonEnum",
+    "entries": [
+      {
+        "name": "STOPPED_REASON_OK",
+        "value": 1
+      },
+      {
+        "name": "STOPPED_REASON_USER",
+        "value": 2
+      },
+      {
+        "name": "STOPPED_REASON_MISSING_RESSOURCE",
+        "value": 3
+      },
+      {
+        "name": "STOPPED_REASON_IMPOSSIBLE_MODIFICATION",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "MountEquipedErrorEnum",
+    "entries": [
+      {
+        "name": "UNSET",
+        "value": 0
+      },
+      {
+        "name": "SET",
+        "value": 1
+      },
+      {
+        "name": "RIDING",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "AccessoryPreviewErrorEnum",
+    "entries": [
+      {
+        "name": "PREVIEW_ERROR",
+        "value": 0
+      },
+      {
+        "name": "PREVIEW_COOLDOWN",
+        "value": 1
+      },
+      {
+        "name": "PREVIEW_BAD_ITEM",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PresetUseResultEnum",
+    "entries": [
+      {
+        "name": "PRESET_USE_OK",
+        "value": 1
+      },
+      {
+        "name": "PRESET_USE_OK_PARTIAL",
+        "value": 2
+      },
+      {
+        "name": "PRESET_USE_ERR_STATS_FIGHT_PREPARATION",
+        "value": 3
+      },
+      {
+        "name": "PRESET_USE_ERR_COOLDOWN",
+        "value": 4
+      },
+      {
+        "name": "PRESET_USE_ERR_BAD_PRESET_ID",
+        "value": 5
+      },
+      {
+        "name": "PRESET_USE_ERR_INVALID_STATE",
+        "value": 6
+      },
+      {
+        "name": "PRESET_USE_ERR_STATS",
+        "value": 7
+      },
+      {
+        "name": "PRESET_USE_ERR_CRITERION",
+        "value": 8
+      },
+      {
+        "name": "PRESET_USE_ERR_UNKNOWN",
+        "value": 9
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PresetDeleteResultEnum",
+    "entries": [
+      {
+        "name": "PRESET_DEL_OK",
+        "value": 1
+      },
+      {
+        "name": "PRESET_DEL_ERR_UNKNOWN",
+        "value": 2
+      },
+      {
+        "name": "PRESET_DEL_ERR_BAD_PRESET_ID",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PresetSaveResultEnum",
+    "entries": [
+      {
+        "name": "PRESET_SAVE_OK",
+        "value": 1
+      },
+      {
+        "name": "PRESET_SAVE_ERR_UNKNOWN",
+        "value": 2
+      },
+      {
+        "name": "PRESET_SAVE_ERR_TOO_MANY",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "AllianceRightsBitEnum",
+    "entries": [
+      {
+        "name": "ALLIANCE_RIGHT_NONE",
+        "value": 0
+      },
+      {
+        "name": "ALLIANCE_RIGHT_BOSS",
+        "value": 1
+      },
+      {
+        "name": "ALLIANCE_RIGHT_MANAGE_PRISMS",
+        "value": 2
+      },
+      {
+        "name": "ALLIANCE_RIGHT_TALK_IN_CHAN",
+        "value": 4
+      },
+      {
+        "name": "ALLIANCE_RIGHT_RECRUIT_GUILDS",
+        "value": 8
+      },
+      {
+        "name": "ALLIANCE_RIGHT_KICK_GUILDS",
+        "value": 16
+      },
+      {
+        "name": "ALLIANCE_RIGHT_MANAGE_RIGHTS",
+        "value": 32
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GuestLimitationEnum",
+    "entries": [
+      {
+        "name": "LIMITED_TO_REGISTERED",
+        "value": 0
+      },
+      {
+        "name": "GUEST_LIMIT_ON_JOB_XP",
+        "value": 1
+      },
+      {
+        "name": "GUEST_LIMIT_ON_JOB_USE",
+        "value": 2
+      },
+      {
+        "name": "GUEST_LIMIT_ON_MAP",
+        "value": 3
+      },
+      {
+        "name": "GUEST_LIMIT_ON_ITEM",
+        "value": 4
+      },
+      {
+        "name": "GUEST_LIMIT_ON_VENDOR",
+        "value": 5
+      },
+      {
+        "name": "GUEST_LIMIT_ON_CHAT",
+        "value": 6
+      },
+      {
+        "name": "GUEST_LIMIT_ON_GUILD",
+        "value": 7
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GameServerTypeEnum",
+    "entries": [
+      {
+        "name": "SERVER_TYPE_UNDEFINED",
+        "value": -1
+      },
+      {
+        "name": "SERVER_TYPE_CLASSICAL",
+        "value": 0
+      },
+      {
+        "name": "SERVER_TYPE_HARDCORE",
+        "value": 1
+      },
+      {
+        "name": "SERVER_TYPE_KOLIZEUM",
+        "value": 2
+      },
+      {
+        "name": "SERVER_TYPE_TOURNAMENT",
+        "value": 3
+      },
+      {
+        "name": "SERVER_TYPE_EPIC",
+        "value": 4
+      },
+      {
+        "name": "SERVER_TYPE_TEMPORIS",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "PlayerStatusEnum",
+    "entries": [
+      {
+        "name": "PLAYER_STATUS_OFFLINE",
+        "value": 0
+      },
+      {
+        "name": "PLAYER_STATUS_UNKNOWN",
+        "value": 1
+      },
+      {
+        "name": "PLAYER_STATUS_AVAILABLE",
+        "value": 10
+      },
+      {
+        "name": "PLAYER_STATUS_IDLE",
+        "value": 20
+      },
+      {
+        "name": "PLAYER_STATUS_AFK",
+        "value": 21
+      },
+      {
+        "name": "PLAYER_STATUS_PRIVATE",
+        "value": 30
+      },
+      {
+        "name": "PLAYER_STATUS_SOLO",
+        "value": 40
+      }
+    ]
+  },
+  {
+    "package": "com.ankamagames.dofus.network.enums",
+    "name": "GuildRightsBitEnum",
+    "entries": [
+      {
+        "name": "GUILD_RIGHT_NONE",
+        "value": 0
+      },
+      {
+        "name": "GUILD_RIGHT_BOSS",
+        "value": 1
+      },
+      {
+        "name": "GUILD_RIGHT_MANAGE_GUILD_BOOSTS",
+        "value": 2
+      },
+      {
+        "name": "GUILD_RIGHT_MANAGE_RIGHTS",
+        "value": 4
+      },
+      {
+        "name": "GUILD_RIGHT_INVITE_NEW_MEMBERS",
+        "value": 8
+      },
+      {
+        "name": "GUILD_RIGHT_BAN_MEMBERS",
+        "value": 16
+      },
+      {
+        "name": "GUILD_RIGHT_MANAGE_XP_CONTRIBUTION",
+        "value": 32
+      },
+      {
+        "name": "GUILD_RIGHT_MANAGE_RANKS",
+        "value": 64
+      },
+      {
+        "name": "GUILD_RIGHT_HIRE_TAX_COLLECTOR",
+        "value": 128
+      },
+      {
+        "name": "GUILD_RIGHT_MANAGE_MY_XP_CONTRIBUTION",
+        "value": 256
+      },
+      {
+        "name": "GUILD_RIGHT_COLLECT",
+        "value": 512
+      },
+      {
+        "name": "GUILD_RIGHT_USE_PADDOCKS",
+        "value": 4096
+      },
+      {
+        "name": "GUILD_RIGHT_ORGANIZE_PADDOCKS",
+        "value": 8192
+      },
+      {
+        "name": "GUILD_RIGHT_TAKE_OTHERS_MOUNTS_IN_PADDOCKS",
+        "value": 16384
+      },
+      {
+        "name": "GUILD_RIGHT_DEFENSE_PRIORITY",
+        "value": 32768
+      },
+      {
+        "name": "GUILD_RIGHT_COLLECT_MY_TAX_COLLECTOR",
+        "value": 65536
+      },
+      {
+        "name": "GUILD_RIGHT_SET_ALLIANCE_PRISM",
+        "value": 131072
+      },
+      {
+        "name": "GUILD_RIGHT_TALK_IN_ALLIANCE_CHAN",
+        "value": 262144
+      }
+    ]
+  }
+]
