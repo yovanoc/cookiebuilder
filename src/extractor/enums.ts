@@ -15,7 +15,7 @@ export interface ID2Enum {
   entries: ID2EnumEntry[];
 }
 
-export function extractD2Enum(klass: IInstanceInfo) {
+export function extractD2Enum(klass: IInstanceInfo): ID2Enum {
   if (
     klass.name.kind !== MultinameKind.QName ||
     klass.name.ns.name !== 'com.ankamagames.dofus.network.enums'

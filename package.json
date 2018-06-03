@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "ts-node src/CommandLine.ts",
-    "test": "mocha --reporter spec -r ts-node/register tests/**/*.spec.ts",
+    "test": "mocha --reporter spec -r ts-node/register tests/**/*.spec.ts --timeout 30000",
     "tinker": "ts-node tinker.ts",
     "build": "tsc",
     "lint": "tslint --project . -t stylish",
