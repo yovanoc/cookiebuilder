@@ -1,23 +1,15 @@
 {
   "extends": [
-    "tslint:recommended"
+    "tslint:latest",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
     "no-console": false,
     "object-literal-sort-keys": [true, "match-declaration-order"],
     "no-bitwise": false,
-    "indent": [
-      true,
-      "spaces",
-      2
-    ],
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape",
-      "avoid-template"
-    ]
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false
   },
   "rulesDirectory": []
 }
