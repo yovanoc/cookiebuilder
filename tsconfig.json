@@ -3,13 +3,13 @@
     "module": "commonjs",
     "target": "es6",
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": "src",
+    "paths": {
+      "@base/*": ["/*"],
+    }
   },
   "include": [
     "src/**/*"
-  ],
-  "baseUrl": "src",
-  "paths": {
-    "@base/*": ["/*"],
-  }
+  ]
 }

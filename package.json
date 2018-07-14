@@ -13,8 +13,8 @@
     "tinker": "ts-node tinker.ts",
     "build": "tsc",
     "lint": "tslint --project . -t stylish",
-    "lint:fix": "tslint --project . -t stylish --fix",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:check": "tslint-config-prettier-check ./tslint.json",
     "prepublishOnly": "npm run lint:fix && npm run test && npm run build"
   },
   "repository": {
@@ -29,18 +29,18 @@
   "homepage": "https://github.com/cookie-project/cookiebuilder#readme",
   "devDependencies": {
     "@types/chai": "^4.1.4",
-    "@types/mocha": "^5.2.2",
-    "@types/node": "^10.3.3",
-    "@types/yargs": "^11.0.0",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^10.5.2",
+    "@types/yargs": "^11.1.0",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "ts-node": "^6.1.1",
+    "ts-node": "^6.2.0",
     "tslint": "^5.0.0-dev.0",
     "tslint-config-prettier": "^1.13.0",
     "typescript": "^2.9.2"
   },
   "dependencies": {
     "xswf": "0.0.3",
-    "yargs": "^11.0.0"
+    "yargs": "^11.1.0"
   }
 }
