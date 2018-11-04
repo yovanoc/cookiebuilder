@@ -1,6 +1,6 @@
 import { IAbcFile } from "xswf/dist/abcFile/types";
-import { MultinameKind } from "xswf/dist/abcFile/types/multiname";
-import { TraitKind } from "xswf/dist/abcFile/types/trait";
+import { IFindpropstrictInstr } from "xswf/dist/abcFile/types/bytecode";
+import { IQName, MultinameKind } from "xswf/dist/abcFile/types/multiname";
 
 export interface IVersion {
   major: number;
@@ -11,19 +11,22 @@ export interface IVersion {
 }
 
 export function extractVersion(abcFile: IAbcFile): IVersion {
-  const klass = abcFile.instances.find(
+  const buildInfos = abcFile.instances.find(
     c =>
       c.name.kind === MultinameKind.QName &&
       c.name.ns.name.startsWith("com.ankamagames.dofus") &&
       c.name.name.includes("BuildInfos")
   );
-  console.log(
-    klass.class.traits.map(
-      t => t.name.kind === MultinameKind.QName && t.name.name
-    )
-  );
-  console.log(
-    klass.class.traits.map(t => t.kind === TraitKind.Const && t.value.val)
-  );
-  return { major: 1, minor: 1, release: 1, revision: 1, patch: 1 };
+
+  const major = 0;
+  const minor = 0;
+  const release = 0;
+  const revision = 0;
+  const patch = 0;
+
+  const instrs = buildInfos.class.cinitBody.code;
+
+  console.log(((instrs[4] as IFindpropstrictInstr).name as IQName).name);
+
+  return { major, minor, release, revision, patch };
 }
