@@ -9,7 +9,8 @@
     "object-literal-sort-keys": [true, "match-declaration-order"],
     "no-bitwise": false,
     "no-submodule-imports": false,
-    "no-implicit-dependencies": false
+    "no-implicit-dependencies": false,
+    "no-object-literal-type-assertion": false
   },
   "rulesDirectory": []
 }

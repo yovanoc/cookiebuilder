@@ -6,7 +6,7 @@ describe("Main Tests", () => {
   let builder: CookieBuilder;
   let protocol: IProtocol;
 
-  beforeEach(() => {
+  before(() => {
     builder = new CookieBuilder();
     protocol = CookieBuilder.extract("./tests/DofusInvoker.swf");
   });
