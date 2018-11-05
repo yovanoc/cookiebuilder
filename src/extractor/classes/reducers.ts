@@ -24,7 +24,7 @@ export function reduceType(f: ID2ClassField) {
     // hack to get NetworkDataContainerMessage working
     f.isVector = true;
     f.isDynamicLength = true;
-    f.WriteLengthMethod = "writeVarInt";
+    f.writeLengthMethod = "writeVarInt";
     f.writeMethod = "writeByte";
   }
   let reduced = writeMethodTypesMap.get(f.writeMethod);

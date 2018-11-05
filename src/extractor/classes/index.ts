@@ -31,7 +31,7 @@ export interface ID2ClassField {
   isVector: boolean;
   isDynamicLength: boolean;
   length: number;
-  WriteLengthMethod: string;
+  writeLengthMethod: string;
   useTypeManager: boolean;
   useBBW: boolean;
   bbwPosition: number;
