@@ -1,14 +1,25 @@
 import { IAbcFile } from "xswf/dist/abcFile/types";
-import { InstructionCode } from "xswf/dist/abcFile/types/bytecode";
+import { Instruction, InstructionCode } from "xswf/dist/abcFile/types/bytecode";
 import { IClassInfo } from "xswf/dist/abcFile/types/classes";
 import {
   Constant,
   ConstantKind,
   INumberConstant
 } from "xswf/dist/abcFile/types/constant";
-import { IMethodInfo } from "xswf/dist/abcFile/types/methods";
+import { IMethodBody } from "xswf/dist/abcFile/types/methods";
 import { IQName, MultinameKind } from "xswf/dist/abcFile/types/multiname";
 import { ITraitMethod, TraitKind } from "xswf/dist/abcFile/types/trait";
+import {
+  handleBBWProp,
+  handleGetProperty,
+  handleSimpleProp,
+  handleTypeManagerProp,
+  handleVecPropDynamicLen,
+  handleVecPropLength,
+  handleVecScalarProp,
+  handleVecTypeManagerProp,
+  preprocessBytecode
+} from "./handlers";
 import { reduceMethod, reduceType } from "./reducers";
 import { findMethodWithPrefix } from "./utils";
 
@@ -78,7 +89,7 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
       `erialize method not found in class ${klass.instance.name.name}`
     );
   }
-  const m = (trait as ITraitMethod).method;
+  const m = (trait as ITraitMethod).methodBody;
 
   const fields = extractMessageFields(klass);
 
@@ -119,10 +130,130 @@ function extractMessageFields(c: IClassInfo): ID2ClassField[] {
 
 function extractSerializeMethods(
   c: IClassInfo,
-  m: IMethodInfo,
+  m: IMethodBody,
   fields: Map<string, ID2ClassField>
 ) {
-  //
+  const checkPattern = (
+    instructions: Instruction[],
+    pattern: InstructionCode[]
+  ): boolean => {
+    if (pattern.length > instructions.length) {
+      return false;
+    }
+    for (let x = 0; x < pattern.length; x++) {
+      if (instructions[x].code !== pattern[x]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  interface IPattern {
+    pattern: InstructionCode[];
+    handler: (
+      c: IClassInfo,
+      fields: Map<string, ID2ClassField>,
+      instrs: Instruction[],
+      field?: ID2ClassField
+    ) => ID2ClassField | undefined;
+  }
+
+  const patterns: IPattern[] = [
+    {
+      handler: handleVecPropDynamicLen,
+      pattern: [
+        InstructionCode.getlocal,
+        InstructionCode.increment | InstructionCode.increment_i,
+        InstructionCode.convert_b |
+          InstructionCode.convert_d |
+          InstructionCode.convert_i |
+          InstructionCode.convert_o |
+          InstructionCode.convert_s |
+          InstructionCode.convert_u,
+        InstructionCode.setlocal,
+        InstructionCode.getlocal,
+        InstructionCode.pushbyte,
+        InstructionCode.iflt
+      ]
+    },
+    {
+      handler: handleVecTypeManagerProp,
+      pattern: [
+        InstructionCode.getproperty,
+        InstructionCode.getlocal,
+        InstructionCode.getproperty,
+        InstructionCode.getlex,
+        InstructionCode.astypelate,
+        InstructionCode.callproperty
+      ]
+    },
+    {
+      handler: handleBBWProp,
+      pattern: [
+        InstructionCode.getlex,
+        InstructionCode.getlocal,
+        InstructionCode.pushbyte,
+        InstructionCode.getlocal,
+        InstructionCode.getproperty,
+        InstructionCode.callproperty
+      ]
+    },
+    {
+      handler: handleVecScalarProp,
+      pattern: [
+        InstructionCode.getproperty,
+        InstructionCode.getlocal,
+        InstructionCode.getproperty,
+        InstructionCode.callpropvoid
+      ]
+    },
+    {
+      handler: handleVecPropLength,
+      pattern: [
+        InstructionCode.getproperty,
+        InstructionCode.getproperty,
+        InstructionCode.callpropvoid
+      ]
+    },
+    {
+      handler: handleSimpleProp,
+      pattern: [InstructionCode.getproperty, InstructionCode.callpropvoid]
+    },
+    {
+      handler: handleTypeManagerProp,
+      pattern: [
+        InstructionCode.getproperty,
+        InstructionCode.callproperty,
+        InstructionCode.callpropvoid
+      ]
+    },
+    {
+      handler: handleGetProperty,
+      pattern: [InstructionCode.getproperty]
+    }
+  ];
+
+  const instrs = preprocessBytecode(m.code);
+  const instrsLen = instrs.length;
+
+  let last: ID2ClassField | undefined;
+  let i = 0;
+
+  while (i < instrsLen) {
+    let f: ID2ClassField | undefined;
+    for (const p of patterns) {
+      const slice = instrs.slice(i, i + p.pattern.length);
+      if (checkPattern(slice, p.pattern)) {
+        f = p.handler(c, fields, slice, last);
+        i += p.pattern.length;
+      }
+    }
+    if (!f) {
+      i++;
+    } else {
+      last = f;
+    }
+  }
 }
 
 function extractProtocolID(c: IClassInfo): number {

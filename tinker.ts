@@ -145,7 +145,7 @@ type InstructionsHandler = [Instruction, ...Instruction[]];
 const patterns: Array<{
   label: string;
   pattern: InstructionCode[];
-  handler?: (instrs?: InstructionsHandler) => void;
+  handler?: (instrs: InstructionsHandler) => void;
 }> = [
   {
     label: "function prelude",
@@ -217,7 +217,7 @@ bodies.forEach(m => {
       console.log("---------------------------");
       console.log("");
 
-      const first = instrs.shift();
+      const first = instrs.shift()!;
 
       if (matchedPattern.handler) {
         matchedPattern.handler([first, ...instrs]);
