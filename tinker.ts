@@ -140,10 +140,12 @@ function preprocessBytecode(code: Instruction[]): Instruction[] {
     });
 }
 
+type InstructionsHandler = [Instruction, ...Instruction[]];
+
 const patterns: Array<{
   label: string;
   pattern: InstructionCode[];
-  handler?: (instrs: Instruction[]) => void;
+  handler?: (instrs?: InstructionsHandler) => void;
 }> = [
   {
     label: "function prelude",
@@ -215,8 +217,10 @@ bodies.forEach(m => {
       console.log("---------------------------");
       console.log("");
 
+      const first = instrs.shift();
+
       if (matchedPattern.handler) {
-        matchedPattern.handler(instrs);
+        matchedPattern.handler([first, ...instrs]);
         console.log("");
       }
 

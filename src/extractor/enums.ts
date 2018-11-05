@@ -36,13 +36,13 @@ export function extractD2Enum(klass: IInstanceInfo): ID2Enum {
 
     const name = (trait.name as IQName).name;
 
-    if (trait.value.kind !== ConstantKind.Int) {
+    const traitValue = trait.value;
+
+    if (!traitValue || (traitValue && traitValue.kind !== ConstantKind.Int)) {
       throw new Error("aren't all enum values integers?!");
     }
 
-    const value = trait.value.val;
-
-    d2Enum.entries.push({ name, value });
+    d2Enum.entries.push({ name, value: traitValue.val });
   });
 
   return d2Enum;

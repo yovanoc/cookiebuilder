@@ -9,13 +9,16 @@ export interface IMetadata {
   protocolVisibility: string;
 }
 
-export function extractMetadata(abcFile: IAbcFile): IMetadata {
+export function extractMetadata(abcFile: IAbcFile): IMetadata | undefined {
   const klass = abcFile.instances.find(
     c =>
       c.name.kind === MultinameKind.QName &&
       c.name.ns.name.startsWith("com.ankamagames.dofus.network") &&
       c.name.name.includes("Metadata")
   );
+  if (!klass) {
+    return;
+  }
   const traits: ITraitSlot[] = klass.class.traits.filter(t => {
     return (
       t.kind === TraitKind.Const &&
@@ -24,10 +27,10 @@ export function extractMetadata(abcFile: IAbcFile): IMetadata {
     );
   }) as ITraitSlot[];
 
-  let protocolBuild: number;
-  let protocolRequiredBuild: number;
-  let protocolDate: Date;
-  let protocolVisibility: string;
+  let protocolBuild: number = 0;
+  let protocolRequiredBuild: number = 0;
+  let protocolDate: Date = new Date();
+  let protocolVisibility: string = "";
 
   for (const trait of traits) {
     if (
@@ -39,19 +42,19 @@ export function extractMetadata(abcFile: IAbcFile): IMetadata {
     }
     switch (trait.name.name) {
       case "PROTOCOL_BUILD": {
-        protocolBuild = trait.value.val as number;
+        protocolBuild = trait.value!.val as number;
         break;
       }
       case "PROTOCOL_REQUIRED_BUILD": {
-        protocolRequiredBuild = trait.value.val as number;
+        protocolRequiredBuild = trait.value!.val as number;
         break;
       }
       case "PROTOCOL_DATE": {
-        protocolDate = new Date(trait.value.val as string);
+        protocolDate = new Date(trait.value!.val as string);
         break;
       }
       case "PROTOCOL_VISIBILITY": {
-        protocolVisibility = trait.value.val as string;
+        protocolVisibility = trait.value!.val as string;
         break;
       }
       default:
@@ -60,8 +63,8 @@ export function extractMetadata(abcFile: IAbcFile): IMetadata {
   }
   return {
     protocolBuild,
-    protocolRequiredBuild,
     protocolDate,
+    protocolRequiredBuild,
     protocolVisibility
   };
 }

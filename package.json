@@ -1,6 +1,6 @@
 {
   "name": "cookiebuilder",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Dofus Protocol Builder",
   "main": "dist/Library.js",
   "types": "dist/Library.d.ts",
@@ -13,7 +13,7 @@
     "tinker": "ts-node tinker.ts",
     "build": "tsc",
     "lint": "tslint --project . -t stylish",
-    "lint:fix": "yarn lint -- --fix",
+    "lint:fix": "yarn lint --fix",
     "lint:check": "tslint-config-prettier-check ./tslint.json",
     "prepublishOnly": "yarn lint:fix && yarn test && yarn build"
   },
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/cookie-project/cookiebuilder#readme",
   "devDependencies": {
     "@types/chai": "^4.1.4",
+    "@types/listr": "^0.13.0",
     "@types/mocha": "^5.2.4",
     "@types/node": "^10.5.2",
     "@types/yargs": "^12.0.1",
@@ -40,6 +41,9 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "eway": "^0.0.8",
+    "listr": "^0.14.2",
     "xswf": "0.0.4",
     "yargs": "^12.0.2"
   }

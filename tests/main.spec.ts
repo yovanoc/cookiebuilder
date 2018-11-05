@@ -6,9 +6,9 @@ describe("Main Tests", () => {
   let builder: CookieBuilder;
   let protocol: IProtocol;
 
-  before(() => {
+  before(async () => {
     builder = new CookieBuilder();
-    protocol = CookieBuilder.extract("./tests/DofusInvoker.swf");
+    protocol = await CookieBuilder.extract()!;
   });
 
   it("instanciates the class", () => {
@@ -21,5 +21,15 @@ describe("Main Tests", () => {
 
   it("should have enums", () => {
     const result = expect(protocol.enums.length).to.equal(95);
+  });
+
+  it("should have correct version", () => {
+    const result = expect(protocol.version).to.deep.equal({
+      major: 2,
+      minor: 42,
+      release: 0,
+      revision: 1027565,
+      patch: 0
+    });
   });
 });
