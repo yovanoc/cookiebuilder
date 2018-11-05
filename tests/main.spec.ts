@@ -32,4 +32,12 @@ describe("Main Tests", () => {
       patch: 0
     });
   });
+
+  it("should have messages", () => {
+    const result = expect(protocol.messages.length).to.equal(1019);
+  });
+
+  it("should have types", () => {
+    const result = expect(protocol.types.length).to.equal(301);
+  });
 });
