@@ -41,7 +41,8 @@ tasks.push({
       ) as ITagDoAbc;
       const abcFile = doAbc.abcFile;
 
-      fs.writeFileSync(args.out, JSON.stringify(extract(abcFile), null, 2));
+      // fs.writeFileSync(args.out, JSON.stringify(extract(abcFile), null, 2));
+      fs.writeFileSync(args.out, JSON.stringify(extract(abcFile)));
 
       resolve();
     });

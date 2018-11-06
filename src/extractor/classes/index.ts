@@ -123,7 +123,7 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
   }
 
   return {
-    package: klass.instance.protectedNs ? klass.instance.protectedNs.name : "",
+    package: klass.instance.name.ns.name,
     name: klass.instance.name.name,
     parent: superName,
     fields,
