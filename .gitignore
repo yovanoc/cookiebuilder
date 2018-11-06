@@ -4,3 +4,5 @@ dist
 sources/
 .DS_Store
 protocol.json
+
+test/

@@ -7,32 +7,34 @@ import { join } from "path";
 import { SwfReader } from "xswf";
 import { ITagDoAbc, TagCode } from "xswf/dist/Types";
 import * as yargs from "yargs";
+import { generateProtocol } from "./builder";
 import Downloader from "./Downloader";
 import { extract } from "./extractor";
 
 const args = yargs
   .usage("Usage: $0 <command>") // (-e (--src [filePath]) --out [jsonFilePath]) or (-b --src [jsonFilePath])
-  .command('extract', 'Extract the protocol.')
+  .command("extract", "Extract the protocol.")
   .option("s", {
-    description: 'DofusInvorker path. If not provided, we doawnload the last one.',
+    description:
+      "DofusInvorker path. If not provided, we doawnload the last one.",
     required: false
   })
-  .alias('s', ['src', 'source'])
+  .alias("s", ["src", "source"])
   .option("o", {
-    description: 'Json outputh path. Required.',
+    description: "Json outputh path. Required.",
     required: true
   })
-  .command('build', 'Build the TS protocol.')
+  .command("build", "Build the TS protocol.")
   .option("o", {
     description: "Output path for the protocol directory.",
     required: true
   })
-  .alias('o', ['out', 'output'])
-  .example('yarn start e -o protocol.json -s ./tests/DofusInvoker.swf', 'Extract the protocol from the Invoker passed in arguments.')
-  .showHelpOnFail(false, 'whoops, something went wrong! run with --help')
-  .argv;
-
-
+  .alias("o", ["out", "output"])
+  .example(
+    "yarn start e -o protocol.json -s ./tests/DofusInvoker.swf",
+    "Extract the protocol from the Invoker passed in arguments."
+  )
+  .showHelpOnFail(false, "whoops, something went wrong! run with --help").argv;
 
 if (args._[0] === "extract") {
   const path = join(homedir(), "DofusInvoker.swf");
@@ -72,7 +74,7 @@ if (args._[0] === "extract") {
     }
   });
 } else if (args._[0] === "build") {
-  console.log(args, "we want to build!")
+  generateProtocol("./protocol.json", "./test");
 } else {
-  throw new Error("whoops, something went wrong! run with --help")
+  throw new Error("whoops, something went wrong! run with --help");
 }
