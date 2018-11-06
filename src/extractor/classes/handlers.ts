@@ -1,8 +1,7 @@
 import {
   ICallpropertyInstr,
+  ICallpropvoidInstr,
   IGetlexInstr,
-  IGetlocal0Instr,
-  IGetlocal1Instr,
   IGetlocalInstr,
   IGetpropertyInstr,
   Instruction,
@@ -11,8 +10,13 @@ import {
   ISetlocalInstr
 } from "xswf/dist/abcFile/types/bytecode";
 import { IClassInfo } from "xswf/dist/abcFile/types/classes";
-import { IQName } from "xswf/dist/abcFile/types/multiname";
+import {
+  IMultinameL,
+  IQName,
+  MultinameKind
+} from "xswf/dist/abcFile/types/multiname";
 import { ID2ClassField } from ".";
+import { isPublicQName } from "./utils";
 
 export function preprocessBytecode(code: Instruction[]): Instruction[] {
   return code
@@ -85,7 +89,15 @@ export function handleVecPropDynamicLen(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const push = instrs[5] as IPushbyteInstr;
+  const len = push.byteValue;
+
+  if (!last || last.isVector || last.isDynamicLength) {
+    throw new Error("vector  found but no dynamic vector");
+  }
+
+  last.length = len;
+  return last;
 }
 
 export function handleVecTypeManagerProp(
@@ -94,7 +106,42 @@ export function handleVecTypeManagerProp(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const lex = instrs[3] as IGetlexInstr;
+  const call = instrs[5] as ICallpropertyInstr;
+
+  const getMultiname = get.name as IQName;
+  const lexMultiname = lex.name as IQName;
+  const callMultiname = call.name as IQName;
+
+  if (!isPublicQName(getMultiname)) {
+    return undefined;
+  }
+
+  const lexNs = lexMultiname.ns;
+  const lexNsName = lexNs.name;
+
+  if (!lexNsName.startsWith("com.ankamagames.dofus.network.types")) {
+    return undefined;
+  }
+
+  const callName = callMultiname.name;
+  if (callName !== "getTypeId") {
+    return undefined;
+  }
+
+  const prop = getMultiname.name;
+
+  const field = fields.get(prop);
+
+  if (!field || !field.isVector) {
+    throw new Error(
+      `${c.instance.protectedNs!.name}: ${prop} field is not a vector`
+    );
+  }
+
+  field.useTypeManager = true;
+  return field;
 }
 
 export function handleBBWProp(
@@ -117,12 +164,11 @@ export function handleBBWProp(
 
   const field = fields.get(prop);
   if (!field || (field && field.type !== "Boolean")) {
-    // throw new Error(
-    //   `${
-    //     c.instance.protectedNs!.name
-    //   }: ${prop} usage of BooleanByteWrapper on non boolean field`
-    // );
-    return undefined;
+    throw new Error(
+      `${
+        c.instance.protectedNs!.name
+      }: ${prop} usage of BooleanByteWrapper on non boolean field`
+    );
   }
   field.useBBW = true;
   field.bbwPosition = position;
@@ -135,7 +181,48 @@ export function handleVecScalarProp(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const getIndex = instrs[2] as IGetpropertyInstr;
+
+  const getMultiname = get.name as IQName;
+  const getIndexMultiname = getIndex.name as IMultinameL;
+
+  if (
+    !isPublicQName(getMultiname) ||
+    getIndexMultiname.kind !== MultinameKind.MultinameL
+  ) {
+    return undefined;
+  }
+
+  const call = instrs[3] as ICallpropvoidInstr;
+  const callMultiname = call.name as IQName;
+
+  if (callMultiname.kind !== MultinameKind.QName) {
+    return undefined;
+  }
+
+  const writeMethod = callMultiname.name;
+
+  if (!writeMethod.startsWith("write")) {
+    throw new Error(
+      `${
+        c.instance.protectedNs!.name
+      }: ${writeMethod} method for vector of scalar types`
+    );
+  }
+
+  const prop = getMultiname.name;
+
+  const field = fields.get(prop);
+
+  if (!field || !field.isVector) {
+    throw new Error(
+      `${c.instance.protectedNs!.name}: vector of scalar write on ${prop} field`
+    );
+  }
+
+  field.writeMethod = writeMethod;
+  return field;
 }
 
 export function handleVecPropLength(
@@ -144,7 +231,42 @@ export function handleVecPropLength(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const getLen = instrs[1] as IGetpropertyInstr;
+  const call = instrs[2] as ICallpropvoidInstr;
+
+  const getMultiname = get.name as IQName;
+  const getLenMultiname = getLen.name as IQName;
+  const callMultiname = call.name as IQName;
+
+  if (!isPublicQName(getMultiname) || !isPublicQName(getLenMultiname)) {
+    return undefined;
+  }
+
+  if (getLenMultiname.name !== "") {
+    return undefined;
+  }
+
+  const prop = getMultiname.name;
+
+  const field = fields.get(prop);
+
+  if (!field || !field.isVector) {
+    throw new Error(
+      `${c.instance.protectedNs!.name} write on non-vector ${prop}`
+    );
+  }
+
+  const writeMethod = callMultiname.name;
+
+  if (!writeMethod.startsWith("write")) {
+    return undefined;
+  }
+
+  field.isDynamicLength = true; // TODO: Not sure?
+  field.writeMethod = writeMethod;
+
+  return field;
 }
 
 export function handleSimpleProp(
@@ -153,7 +275,30 @@ export function handleSimpleProp(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const call = instrs[1] as ICallpropvoidInstr;
+
+  const getMultiname = get.name as IQName;
+  const callMultiname = call.name as IQName;
+
+  if (!isPublicQName(getMultiname)) {
+    return undefined;
+  }
+
+  const prop = getMultiname.name;
+  const writeMethod = callMultiname.name;
+
+  if (!writeMethod.startsWith("write")) {
+    return undefined;
+  }
+
+  const field = fields.get(prop);
+
+  if (!field) {
+    throw new Error(`${c.instance.protectedNs!.name}.${prop} field not found`);
+  }
+  field.writeMethod = writeMethod;
+  return field;
 }
 
 export function handleTypeManagerProp(
@@ -162,7 +307,42 @@ export function handleTypeManagerProp(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const getType = instrs[1] as ICallpropertyInstr;
+  const call = instrs[2] as ICallpropvoidInstr;
+
+  const getMultiname = get.name as IQName;
+  const getTypeMultiname = getType.name as IQName;
+  const callMultiname = call.name as IQName;
+
+  if (!isPublicQName(getMultiname) || !isPublicQName(getTypeMultiname)) {
+    return undefined;
+  }
+
+  if (getTypeMultiname.name !== "getTypeId") {
+    return undefined;
+  }
+
+  const prop = getMultiname.name;
+
+  const field = fields.get(prop);
+
+  if (!field) {
+    throw new Error(
+      `${c.instance.protectedNs!.name} getTypeId on ${prop} field`
+    );
+  }
+
+  const writeMethod = callMultiname.name;
+
+  if (writeMethod !== "writeShort") {
+    throw new Error(
+      `${c.instance.protectedNs!.name} invalid ${writeMethod} for getTypeId`
+    );
+  }
+
+  field.useTypeManager = true;
+  return field;
 }
 export function handleGetProperty(
   c: IClassInfo,
@@ -170,5 +350,20 @@ export function handleGetProperty(
   instrs: Instruction[],
   last?: ID2ClassField
 ): ID2ClassField | undefined {
-  return undefined;
+  const get = instrs[0] as IGetpropertyInstr;
+  const multi = get.name as IQName;
+
+  if (!isPublicQName(multi)) {
+    return undefined;
+  }
+
+  const name = multi.name;
+
+  const field = fields.get(name);
+
+  if (!field) {
+    return undefined;
+  }
+
+  return field;
 }

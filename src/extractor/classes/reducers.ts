@@ -18,7 +18,7 @@ export function reduceType(f: ID2ClassField) {
   if (f.type === "Boolean") {
     f.type = "bool";
   }
-  if (f.writeMethod === "") {
+  if (!f.writeMethod) {
     return;
   } else if (f.writeMethod === "writeBytes") {
     // hack to get NetworkDataContainerMessage working
@@ -54,7 +54,7 @@ const typesToMethodMap = new Map([
 
 export function reduceMethod(f: ID2ClassField) {
   let m = typesToMethodMap.get(f.type);
-  if (!m || f.writeMethod === "") {
+  if (!m || !f.writeMethod) {
     return;
   }
   if (f.writeMethod.includes("Var")) {

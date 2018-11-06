@@ -7,8 +7,16 @@ import {
   INumberConstant
 } from "xswf/dist/abcFile/types/constant";
 import { IMethodBody } from "xswf/dist/abcFile/types/methods";
-import { IQName, MultinameKind } from "xswf/dist/abcFile/types/multiname";
-import { ITraitMethod, TraitKind } from "xswf/dist/abcFile/types/trait";
+import {
+  IQName,
+  ITypeName,
+  MultinameKind
+} from "xswf/dist/abcFile/types/multiname";
+import {
+  ITraitMethod,
+  ITraitSlot,
+  TraitKind
+} from "xswf/dist/abcFile/types/trait";
 import {
   handleBBWProp,
   handleGetProperty,
@@ -21,20 +29,20 @@ import {
   preprocessBytecode
 } from "./handlers";
 import { reduceMethod, reduceType } from "./reducers";
-import { findMethodWithPrefix } from "./utils";
+import { findMethodWithPrefix, isPublicNamespace } from "./utils";
 
 export interface ID2ClassField {
   name: string;
   type: string;
-  writeMethod: string;
-  method: string;
+  writeMethod?: string;
+  method?: string;
   isVector: boolean;
-  isDynamicLength: boolean;
-  length: number;
-  writeLengthMethod: string;
-  useTypeManager: boolean;
-  useBBW: boolean;
-  bbwPosition: number;
+  isDynamicLength?: boolean;
+  length?: number;
+  writeLengthMethod?: string;
+  useTypeManager?: boolean;
+  useBBW?: boolean;
+  bbwPosition?: number;
 }
 
 export interface ID2Class {
@@ -86,7 +94,7 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
   const trait = findMethodWithPrefix(klass, "serializeAs_");
   if (!trait) {
     throw new Error(
-      `erialize method not found in class ${klass.instance.name.name}`
+      `Serialize method not found in class ${klass.instance.name.name}`
     );
   }
   const m = (trait as ITraitMethod).methodBody;
@@ -125,7 +133,83 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
 }
 
 function extractMessageFields(c: IClassInfo): ID2ClassField[] {
-  return [];
+  const createField = (name: string, tt: IQName | ITypeName): ID2ClassField => {
+    let isVector = false;
+    const t = tt.name;
+    let type = typeof t === "string" ? t : "";
+    if (tt.kind === MultinameKind.TypeName) {
+      type = (tt.names[0] as IQName).name;
+      isVector = true;
+    } else if (t === "ByteArray") {
+      isVector = true;
+      type = "uint";
+    }
+
+    return {
+      name,
+      type,
+      isVector
+    };
+  };
+  const fields: ID2ClassField[] = [];
+  const slots = c.instance.traits.filter(
+    t => t.kind === TraitKind.Slot || t.kind === TraitKind.Const
+  );
+  for (const slot of slots) {
+    const name = slot.name;
+    if (!isPublicNamespace(name.ns)) {
+      continue;
+    }
+    const field = createField(name.name, (slot as ITraitSlot).typeName as
+      | IQName
+      | ITypeName);
+    fields.push(field);
+  }
+  // NetworkDataContainerMessage uses a pair of setter/getter to store content
+  // It seems to be useless and the only packet that does so we need to
+  // also check for pairs of getter/setter
+  interface IGetSetter {
+    getter: boolean;
+    getterType?: IQName;
+    setter: boolean;
+  }
+  const getSetters: Map<string, IGetSetter> = new Map();
+  const methods = c.instance.traits.filter(
+    t =>
+      t.kind === TraitKind.Method ||
+      t.kind === TraitKind.Getter ||
+      t.kind === TraitKind.Setter
+  );
+  for (const m of methods) {
+    const isGetter = m.kind === TraitKind.Getter;
+    const isSetter = m.kind === TraitKind.Setter;
+    const name = m.name;
+    if (!(isGetter || isSetter) || !isPublicNamespace(name.ns)) {
+      continue;
+    }
+    let v = getSetters.get(m.name.name);
+    if (!v) {
+      v = {
+        getter: false,
+        setter: false
+      };
+      getSetters.set(m.name.name, v);
+    }
+    v.getter = v.getter || isGetter;
+    v.setter = v.setter || isSetter;
+    if (isGetter) {
+      v.getterType = (m as ITraitMethod).method.returnType as IQName;
+    }
+  }
+
+  for (const [name, gs] of getSetters) {
+    if (!(gs.getter && gs.setter)) {
+      continue;
+    }
+    const field = createField(name, gs.getterType!);
+    fields.push(field);
+  }
+  return fields;
 }
 
 function extractSerializeMethods(

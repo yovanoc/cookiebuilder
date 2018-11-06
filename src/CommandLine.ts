@@ -33,7 +33,6 @@ if (!args.src) {
 tasks.push({
   title: "Extract protocol",
   task: (ctx, task) => {
-    const base = task.title;
     return new Promise<void>(resolve => {
       const reader = new SwfReader(args.src || path);
       const file = reader.getFile();
@@ -58,5 +57,4 @@ listr.run().then(() => {
   if (!args.src && path) {
     fs.unlinkSync(path);
   }
-  console.log("Protocol generated! :)");
 });

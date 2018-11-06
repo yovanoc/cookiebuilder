@@ -1,4 +1,3 @@
-import { IAbcFile } from "xswf/dist/abcFile/types";
 import { IClassInfo } from "xswf/dist/abcFile/types/classes";
 import {
   MultinameInfo,
@@ -27,7 +26,7 @@ export function findMethodWithPrefix(
   }
 }
 
-export function isPublicQName(abc: IAbcFile, m: MultinameInfo): boolean {
+export function isPublicQName(m: MultinameInfo): boolean {
   if (m.kind !== MultinameKind.QName) {
     return false;
   }
