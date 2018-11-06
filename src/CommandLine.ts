@@ -11,51 +11,68 @@ import Downloader from "./Downloader";
 import { extract } from "./extractor";
 
 const args = yargs
-  .usage("Usage: $0 --src [filePath] [--out [filePath]]")
-  .demandOption(["out"])
-  .alias("src", "s")
-  .alias("out", "o")
-  .describe(
-    "src",
-    "Path to the DofusInvoker.swf (Not required: could download the latest)"
-  )
-  .describe("out", "Where to save the generated protocol")
-  .epilog("Copyright © 2018 DevChris & Aegis").argv;
+  .usage("Usage: $0 <command>") // (-e (--src [filePath]) --out [jsonFilePath]) or (-b --src [jsonFilePath])
+  .command('extract', 'Extract the protocol.')
+  .option("s", {
+    description: 'DofusInvorker path. If not provided, we doawnload the last one.',
+    required: false
+  })
+  .alias('s', ['src', 'source'])
+  .option("o", {
+    description: 'Json outputh path. Required.',
+    required: true
+  })
+  .command('build', 'Build the TS protocol.')
+  .option("o", {
+    description: "Output path for the protocol directory.",
+    required: true
+  })
+  .alias('o', ['out', 'output'])
+  .example('yarn start e -o protocol.json -s ./tests/DofusInvoker.swf', 'Extract the protocol from the Invoker passed in arguments.')
+  .showHelpOnFail(false, 'whoops, something went wrong! run with --help')
+  .argv;
 
-const path = join(homedir(), "DofusInvoker.swf");
 
-const tasks: Listr.ListrTask[] = [];
 
-if (!args.src) {
-  tasks.push(Downloader.getDownloadTask(path));
+if (args._[0] === "extract") {
+  const path = join(homedir(), "DofusInvoker.swf");
+
+  const tasks: Listr.ListrTask[] = [];
+
+  if (!args.src) {
+    tasks.push(Downloader.getDownloadTask(path));
+  }
+
+  tasks.push({
+    title: "Extract protocol",
+    task: (ctx, task) => {
+      return new Promise<void>(resolve => {
+        const reader = new SwfReader(args.src || path);
+        const file = reader.getFile();
+        const doAbc = file.tags.find(
+          tag => tag.code === TagCode.DoABC
+        ) as ITagDoAbc;
+        const abcFile = doAbc.abcFile;
+
+        fs.writeFileSync(args.out, JSON.stringify(extract(abcFile)));
+
+        resolve();
+      });
+    }
+  });
+
+  const listr = new Listr(tasks, {
+    concurrent: false,
+    renderer: "default"
+  });
+
+  listr.run().then(() => {
+    if (!args.src && path) {
+      fs.unlinkSync(path);
+    }
+  });
+} else if (args._[0] === "build") {
+  console.log(args, "we want to build!")
+} else {
+  throw new Error("whoops, something went wrong! run with --help")
 }
-
-tasks.push({
-  title: "Extract protocol",
-  task: (ctx, task) => {
-    return new Promise<void>(resolve => {
-      const reader = new SwfReader(args.src || path);
-      const file = reader.getFile();
-      const doAbc = file.tags.find(
-        tag => tag.code === TagCode.DoABC
-      ) as ITagDoAbc;
-      const abcFile = doAbc.abcFile;
-
-      // fs.writeFileSync(args.out, JSON.stringify(extract(abcFile), null, 2));
-      fs.writeFileSync(args.out, JSON.stringify(extract(abcFile)));
-
-      resolve();
-    });
-  }
-});
-
-const listr = new Listr(tasks, {
-  concurrent: false,
-  renderer: "default"
-});
-
-listr.run().then(() => {
-  if (!args.src && path) {
-    fs.unlinkSync(path);
-  }
-});
