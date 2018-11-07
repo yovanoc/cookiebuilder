@@ -19,10 +19,6 @@ describe("Main Tests", () => {
     const result = expect(protocol).not.undefined;
   });
 
-  it("should have enums", () => {
-    const result = expect(protocol.enums.length).to.equal(95);
-  });
-
   it("should have correct version", () => {
     const result = expect(protocol.version).to.deep.equal({
       major: 2,
@@ -31,6 +27,10 @@ describe("Main Tests", () => {
       revision: 1027565,
       patch: 0
     });
+  });
+
+  it("should have enums", () => {
+    const result = expect(protocol.enums.length).to.equal(95);
   });
 
   it("should have messages", () => {
