@@ -7,9 +7,10 @@ import { join } from "path";
 import { SwfReader } from "xswf";
 import { ITagDoAbc, TagCode } from "xswf/dist/Types";
 import * as yargs from "yargs";
+import { build } from "./builder";
 import { generateProtocol } from "./builder";
 import Downloader from "./Downloader";
-import { extract } from "./extractor";
+import { extract, IProtocol } from "./extractor";
 
 const args = yargs
   .usage("Usage: $0 <command>") // (-e (--src [filePath]) --out [jsonFilePath]) or (-b --src [jsonFilePath])
@@ -39,7 +40,9 @@ const args = yargs
 if (args._[0] === "extract") {
   const path = join(homedir(), "DofusInvoker.swf");
 
-  const tasks: Listr.ListrTask[] = [];
+let protocol: IProtocol;
+
+const tasks: Listr.ListrTask[] = [];
 
   if (!args.src) {
     tasks.push(Downloader.getDownloadTask(path));
@@ -56,17 +59,28 @@ if (args._[0] === "extract") {
         ) as ITagDoAbc;
         const abcFile = doAbc.abcFile;
 
-        fs.writeFileSync(args.out, JSON.stringify(extract(abcFile)));
+      protocol = extract(abcFile);
+      fs.writeFileSync(args.out, JSON.stringify(protocol));
 
         resolve();
       });
     }
   });
 
-  const listr = new Listr(tasks, {
-    concurrent: false,
-    renderer: "default"
-  });
+tasks.push({
+  title: "Build protocol",
+  task: (ctx, task) => {
+    return new Promise<void>(resolve => {
+      build(protocol, "./protocol");
+      resolve();
+    });
+  }
+});
+
+const listr = new Listr(tasks, {
+  concurrent: false,
+  renderer: "default"
+});
 
   listr.run().then(() => {
     if (!args.src && path) {
