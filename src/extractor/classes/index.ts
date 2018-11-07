@@ -249,11 +249,11 @@ function extractSerializeMethods(
         InstructionCode.getlocal,
         InstructionCode.increment | InstructionCode.increment_i,
         InstructionCode.convert_b |
-          InstructionCode.convert_d |
-          InstructionCode.convert_i |
-          InstructionCode.convert_o |
-          InstructionCode.convert_s |
-          InstructionCode.convert_u,
+        InstructionCode.convert_d |
+        InstructionCode.convert_i |
+        InstructionCode.convert_o |
+        InstructionCode.convert_s |
+        InstructionCode.convert_u,
         InstructionCode.setlocal,
         InstructionCode.getlocal,
         InstructionCode.pushbyte,
