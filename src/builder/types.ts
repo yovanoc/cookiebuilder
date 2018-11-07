@@ -63,7 +63,7 @@ export function buildTypes(protocol: IProtocol, path: string) {
     const bottom = ["}\n"];
 
     const body = buildType(protocol, t, importsFile);
-    const all = importsFile.concat(head, body, bottom).join("\n");
+    const all = importsFile.concat([""], head, body, bottom).join("\n");
 
     const filePath = join(folderPath, `${t.name}.ts`);
     // console.log(`Writing Type: ${filePath} ...`);
@@ -132,14 +132,21 @@ function buildType(
     }
   }
 
+  const usedImports: Map<string, string> = new Map();
+
   for (const o of others) {
     let realType = getRealType(o.type);
     let initValue = getDefaultInitValue(realType);
     const isCustomType = realType === "";
     if (isCustomType) {
-      const type = protocol.types.find(ty => ty.name === o.type)!;
-      const cleanNs = cleanNamespace(type.package);
-      imports.push(`import { ${o.type} } from "@${cleanNs}/${o.type}";`);
+      const alreadyImported = usedImports.has(o.type);
+      if (!alreadyImported) {
+        const type = protocol.types.find(ty => ty.name === o.type)!;
+        const cleanNs = cleanNamespace(type.package);
+
+        imports.push(`import { ${o.type} } from "@${cleanNs}/${o.type}";`);
+        usedImports.set(o.type, "ALREADY");
+      }
       realType = o.type;
       initValue = `new ${o.type}()`;
     }
@@ -152,37 +159,59 @@ function buildType(
 
     if (o.useTypeManager) {
       imports.push(
-        `import { ProtocolTypeManager } from "@dofus/network/ProtocolTypeManager";\n`
+        `import { ProtocolTypeManager } from "@dofus/network/ProtocolTypeManager";`
       );
     }
 
     if (o.isVector) {
-      if (o.useTypeManager) {
-        //
-      } else {
-        //
-      }
       serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
-      serializeBody.push(
-        `    for (const e of this.${o.name}) {`,
-        `      writer.${o.writeMethod}(e);`,
-        `    }`
-      );
-      deserializeBody.push(`    const ${o.name}Length = reader.readShort();`);
       deserializeBody.push(
-        `    this.${o.name} = [];`,
-        `    for (let i = 0; i < ${o.name}Length; i++) {`,
-        `      this.${o.name}.push(reader.${o.writeMethod &&
-          o.writeMethod.replace("write", "read")}());`,
-        `    }`
+        `    const ${o.name}Length = reader.readUnsignedShort();`
       );
+      if (o.useTypeManager || isCustomType) {
+        serializeBody.push(
+          `    for (const e of this.${o.name}) {`,
+          `      writer.writeShort(e.getTypeId());`,
+          `      e.serialize(writer);`,
+          `    }`
+        );
+        if (o.useTypeManager) {
+          deserializeBody.push(
+            `    for (let i = 0; i < ${o.name}Length; i++) {`,
+            `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`,
+            `      e.deserialize(reader);`,
+            `      this.${o.name}.push(e);`,
+            `    }`
+          );
+        } else {
+          deserializeBody.push(
+            `    for (let i = 0; i < ${o.name}Length; i++) {`,
+            `      const e = new ${o.type}();`,
+            `      e.deserialize(reader);`,
+            `      this.${o.name}.push(e);`,
+            `    }`
+          );
+        }
+      } else {
+        serializeBody.push(
+          `    for (const e of this.${o.name}) {`,
+          `      writer.${o.writeMethod}(e);`,
+          `    }`
+        );
+        deserializeBody.push(
+          `    for (let i = 0; i < ${o.name}Length; i++) {`,
+          `      this.${o.name}.push(reader.${o.writeMethod &&
+            o.writeMethod.replace("write", "read")}());`,
+          `    }`
+        );
+      }
     } else {
       if (o.useTypeManager) {
         serializeBody.push(`    this.${o.name}.serialize(writer);`);
         deserializeBody.push(
           `    this.${
             o.name
-          } = ProtocolTypeManager.getInstance(reader.readShort());`
+          } = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`
         );
       } else {
         if (isCustomType) {
