@@ -75,3 +75,30 @@ export function cleanNamespace(ns: string) {
     "/"
   );
 }
+
+export function getRealType(type: string): string {
+  const map = new Map([
+    ["int8", "number"],
+    ["int16", "number"],
+    ["int32", "number"],
+    ["int64", "number"],
+    ["uint8", "number"],
+    ["uint16", "number"],
+    ["uint32", "number"],
+    ["uint64", "number"],
+    ["float32", "number"],
+    ["float64", "number"],
+    ["string", "string"],
+    ["bool", "boolean"]
+  ]);
+  return map.get(type) || "";
+}
+
+export function getDefaultInitValue(type: string): string {
+  const map = new Map([
+    ["number", "0"],
+    ["string", `""`],
+    ["boolean", "false"]
+  ]);
+  return map.get(type) || "";
+}

@@ -1,9 +1,10 @@
+import { IProtocol } from "@/extractor";
 import { ID2Class } from "@/extractor/classes";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import { cleanNamespace, mkdirRecursive } from "./utils";
 
-export function buildMessages(messages: ID2Class[], path: string) {
+export function buildMessages(protocol: IProtocol, path: string) {
   const importsIndex: string[] = [];
   const exportsIndex: string[] = [];
   const importsMessageReceiver: string[] = [
@@ -30,7 +31,7 @@ export function buildMessages(messages: ID2Class[], path: string) {
   const entriesMessageReceiver: string[] = [];
   const endMessageReceiver = ["  };", "}\n"];
   exportsIndex.push("export default {");
-  for (const m of messages) {
+  for (const m of protocol.messages) {
     const clean = cleanNamespace(m.package);
     importsIndex.push(`import { ${m.name} } from "@${clean}/${m.name}";`);
     entriesMessageReceiver.push(
@@ -40,11 +41,14 @@ export function buildMessages(messages: ID2Class[], path: string) {
     const folderPath = join(path, clean);
     mkdirRecursive(folderPath);
 
+    const importsFile: string[] = [];
+
     const head = [`export class ${m.name} {`];
 
     const bottom = ["}\n"];
 
-    const all = head.concat(bottom).join("\n");
+    const body = buildMessage(m, importsFile);
+    const all = importsFile.concat(head, body, bottom).join("\n");
 
     const filePath = join(folderPath, `${m.name}.ts`);
     // console.log(`Writing Message: ${filePath} ...`);
@@ -65,4 +69,8 @@ export function buildMessages(messages: ID2Class[], path: string) {
       .concat(entriesMessageReceiver, endMessageReceiver)
       .join("\n")
   );
+}
+
+function buildMessage(m: ID2Class, imports: string[]): string[] {
+  return [];
 }

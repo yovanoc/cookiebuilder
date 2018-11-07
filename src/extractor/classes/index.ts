@@ -123,10 +123,10 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
   }
 
   return {
-    package: klass.instance.name.ns.name,
-    name: klass.instance.name.name,
-    parent: superName,
     fields,
+    name: klass.instance.name.name,
+    package: klass.instance.name.ns.name,
+    parent: superName,
     protocolId,
     useHashFunc
   };
@@ -146,9 +146,9 @@ function extractMessageFields(c: IClassInfo): ID2ClassField[] {
     }
 
     return {
+      isVector,
       name,
-      type,
-      isVector
+      type
     };
   };
   const fields: ID2ClassField[] = [];
@@ -249,11 +249,11 @@ function extractSerializeMethods(
         InstructionCode.getlocal,
         InstructionCode.increment | InstructionCode.increment_i,
         InstructionCode.convert_b |
-        InstructionCode.convert_d |
-        InstructionCode.convert_i |
-        InstructionCode.convert_o |
-        InstructionCode.convert_s |
-        InstructionCode.convert_u,
+          InstructionCode.convert_d |
+          InstructionCode.convert_i |
+          InstructionCode.convert_o |
+          InstructionCode.convert_s |
+          InstructionCode.convert_u,
         InstructionCode.setlocal,
         InstructionCode.getlocal,
         InstructionCode.pushbyte,

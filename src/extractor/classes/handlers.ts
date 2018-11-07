@@ -31,51 +31,51 @@ export function preprocessBytecode(code: Instruction[]): Instruction[] {
       switch (c.code) {
         case InstructionCode.getlocal_0:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.getlocal,
-            index: 0,
-            byteOffset: c.byteOffset
+            index: 0
           } as IGetlocalInstr;
         case InstructionCode.getlocal_1:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.getlocal,
-            index: 1,
-            byteOffset: c.byteOffset
+            index: 1
           } as IGetlocalInstr;
         case InstructionCode.getlocal_2:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.getlocal,
-            index: 2,
-            byteOffset: c.byteOffset
+            index: 2
           } as IGetlocalInstr;
         case InstructionCode.getlocal_3:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.getlocal,
-            index: 3,
-            byteOffset: c.byteOffset
+            index: 3
           } as IGetlocalInstr;
         case InstructionCode.setlocal_0:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.setlocal,
-            index: 0,
-            byteOffset: c.byteOffset
+            index: 0
           } as ISetlocalInstr;
         case InstructionCode.setlocal_1:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.setlocal,
-            index: 1,
-            byteOffset: c.byteOffset
+            index: 1
           } as ISetlocalInstr;
         case InstructionCode.setlocal_2:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.setlocal,
-            index: 2,
-            byteOffset: c.byteOffset
+            index: 2
           } as ISetlocalInstr;
         case InstructionCode.setlocal_3:
           return {
+            byteOffset: c.byteOffset,
             code: InstructionCode.setlocal,
-            index: 3,
-            byteOffset: c.byteOffset
+            index: 3
           } as ISetlocalInstr;
         default:
           return c;
@@ -93,7 +93,7 @@ export function handleVecPropDynamicLen(
   const len = push.byteValue;
 
   if (!last || last.isVector || last.isDynamicLength) {
-    throw new Error("vector  found but no dynamic vector");
+    throw new Error("vector found but no dynamic vector");
   }
 
   last.length = len;
@@ -170,6 +170,7 @@ export function handleBBWProp(
       }: ${prop} usage of BooleanByteWrapper on non boolean field`
     );
   }
+
   field.useBBW = true;
   field.bbwPosition = position;
   return field;
@@ -344,6 +345,7 @@ export function handleTypeManagerProp(
   field.useTypeManager = true;
   return field;
 }
+
 export function handleGetProperty(
   c: IClassInfo,
   fields: Map<string, ID2ClassField>,

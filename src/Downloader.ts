@@ -6,7 +6,6 @@ import { ListrTask } from "listr";
 export default class Downloader {
   public static getDownloadTask(path: string): ListrTask {
     return {
-      title: "Download latest DofusInvoker.swf",
       task: (ctx, task) => {
         const base = task.title;
         const render = (msg: string) => (task.title = `${base}: ${msg}`);
@@ -22,7 +21,8 @@ export default class Downloader {
             .then(() => resolve())
             .catch(() => reject());
         });
-      }
+      },
+      title: "Download latest DofusInvoker.swf"
     };
   }
 

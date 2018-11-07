@@ -5,5 +5,3 @@ sources/
 .DS_Store
 protocol.json
 protocol/
-
-test/

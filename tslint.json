@@ -6,7 +6,6 @@
   "jsRules": {},
   "rules": {
     "no-console": false,
-    "object-literal-sort-keys": [true, "match-declaration-order"],
     "no-bitwise": false,
     "no-submodule-imports": false,
     "no-implicit-dependencies": false,

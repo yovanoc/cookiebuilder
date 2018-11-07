@@ -15,10 +15,10 @@ export interface IProtocol {
 export function extract(abcFile: IAbcFile): IProtocol {
   const { messages, types } = extractD2MessagesAndTypes(abcFile);
   return {
-    metadata: extractMetadata(abcFile)!,
-    version: extractVersion(abcFile),
     enums: extractD2Enums(abcFile),
     messages,
-    types
+    metadata: extractMetadata(abcFile)!,
+    types,
+    version: extractVersion(abcFile)
   };
 }

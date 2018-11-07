@@ -8,7 +8,6 @@ import { SwfReader } from "xswf";
 import { ITagDoAbc, TagCode } from "xswf/dist/Types";
 import * as yargs from "yargs";
 import { build } from "./builder";
-import { generateProtocol } from "./builder";
 import Downloader from "./Downloader";
 import { extract, IProtocol } from "./extractor";
 
@@ -37,19 +36,17 @@ const args = yargs
   )
   .showHelpOnFail(false, "whoops, something went wrong! run with --help").argv;
 
-if (args._[0] === "extract") {
-  const path = join(homedir(), "DofusInvoker.swf");
+const tasks: Listr.ListrTask[] = [];
+const path = join(homedir(), "DofusInvoker.swf");
 
 let protocol: IProtocol;
 
-const tasks: Listr.ListrTask[] = [];
-
+if (args._[0] === "extract") {
   if (!args.src) {
     tasks.push(Downloader.getDownloadTask(path));
   }
 
   tasks.push({
-    title: "Extract protocol",
     task: (ctx, task) => {
       return new Promise<void>(resolve => {
         const reader = new SwfReader(args.src || path);
@@ -59,36 +56,55 @@ const tasks: Listr.ListrTask[] = [];
         ) as ITagDoAbc;
         const abcFile = doAbc.abcFile;
 
-      protocol = extract(abcFile);
-      fs.writeFileSync(args.out, JSON.stringify(protocol));
+        protocol = extract(abcFile);
+        fs.writeFileSync(args.out, JSON.stringify(protocol));
 
         resolve();
       });
-    }
+    },
+    title: "Extract protocol"
+  });
+} else if (args._[0] === "build") {
+  tasks.push({
+    task: (ctx, task) => {
+      return new Promise<void>(resolve => {
+        const reader = new SwfReader(args.src || path);
+        const file = reader.getFile();
+        const doAbc = file.tags.find(
+          tag => tag.code === TagCode.DoABC
+        ) as ITagDoAbc;
+        const abcFile = doAbc.abcFile;
+
+        protocol = extract(abcFile);
+        fs.writeFileSync(args.out, JSON.stringify(protocol));
+
+        resolve();
+      });
+    },
+    title: "Extract protocol"
   });
 
-tasks.push({
-  title: "Build protocol",
-  task: (ctx, task) => {
-    return new Promise<void>(resolve => {
-      build(protocol, "./protocol");
-      resolve();
-    });
-  }
-});
+  tasks.push({
+    task: (ctx, task) => {
+      return new Promise<void>(resolve => {
+        build(protocol, "./protocol");
+        resolve();
+      });
+    },
+    title: "Build protocol"
+  });
+} else {
+  console.log("whoops, something went wrong! run with --help");
+  process.exit();
+}
 
 const listr = new Listr(tasks, {
   concurrent: false,
   renderer: "default"
 });
 
-  listr.run().then(() => {
-    if (!args.src && path) {
-      fs.unlinkSync(path);
-    }
-  });
-} else if (args._[0] === "build") {
-  generateProtocol("./protocol.json", "./test");
-} else {
-  throw new Error("whoops, something went wrong! run with --help");
-}
+listr.run().then(() => {
+  if (!args.src && path) {
+    fs.unlinkSync(path);
+  }
+});

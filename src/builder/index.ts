@@ -8,8 +8,8 @@ import { mkdirRecursive, rimraf } from "./utils";
 export function build(protocol: IProtocol, path: string) {
   // rimraf(path);
   mkdirRecursive(path);
-  buildMetadata(protocol.metadata, path);
+  buildTypes(protocol, path);
+  buildMessages(protocol, path);
   buildEnums(protocol.enums, path);
-  buildTypes(protocol.types, path);
-  buildMessages(protocol.messages, path);
+  buildMetadata(protocol.metadata, path);
 }

@@ -24,9 +24,9 @@ export function extractD2Enum(klass: IInstanceInfo): ID2Enum {
   }
 
   const d2Enum: ID2Enum = {
-    package: klass.name.ns.name,
+    entries: [],
     name: klass.name.name,
-    entries: []
+    package: klass.name.ns.name
   };
 
   klass.class.traits.forEach(trait => {
