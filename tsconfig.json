@@ -5,9 +5,9 @@
     "declaration": true,
     "strict": true,
     "outDir": "./dist",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@base/*": ["/*"],
+      "@/*": ["./*"],
     }
   },
   "include": [
