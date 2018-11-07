@@ -215,6 +215,7 @@ function buildType(
             o.name
           } = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`
         );
+        deserializeBody.push(`    this.${o.name}.deserialize(reader);`);
       } else {
         if (isCustomType) {
           serializeBody.push(`    this.${o.name}.serialize(writer);`);
