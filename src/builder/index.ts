@@ -2,6 +2,7 @@ import { IProtocol } from "@/extractor";
 import { buildEnums } from "./enums";
 import { buildMessages } from "./messages";
 import { buildMetadata } from "./metadata";
+import { buildProtocolConstantsEnum } from "./protocolConstantsEnum";
 import { buildTypes } from "./types";
 import { mkdirRecursive, rimraf } from "./utils";
 
@@ -12,4 +13,5 @@ export function build(protocol: IProtocol, path: string) {
   buildMessages(protocol, path);
   buildEnums(protocol.enums, path);
   buildMetadata(protocol.metadata, path);
+  buildProtocolConstantsEnum(protocol.protocolConstantsEnum, path);
 }

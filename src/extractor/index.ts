@@ -2,12 +2,14 @@ import { IAbcFile } from "xswf/dist/abcFile/types";
 import { extractD2MessagesAndTypes, ID2Class } from "./classes";
 import { extractD2Enums, ID2Enum } from "./enums";
 import { extractMetadata, IMetadata } from "./metadata";
+import { extractProtocolConstantsEnum } from "./protocolConstantsEnum";
 import { extractVersion, IVersion } from "./version";
 
 export interface IProtocol {
   metadata: IMetadata;
   version: IVersion;
   enums: ID2Enum[];
+  protocolConstantsEnum: ID2Enum;
   messages: ID2Class[];
   types: ID2Class[];
 }
@@ -18,6 +20,7 @@ export function extract(abcFile: IAbcFile): IProtocol {
     enums: extractD2Enums(abcFile),
     messages,
     metadata: extractMetadata(abcFile)!,
+    protocolConstantsEnum: extractProtocolConstantsEnum(abcFile),
     types,
     version: extractVersion(abcFile)
   };
