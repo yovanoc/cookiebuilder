@@ -133,6 +133,7 @@ function buildType(
   }
 
   const usedImports: Map<string, string> = new Map();
+  let protocolTypeManagerAlreadyImported = false;
 
   for (const o of others) {
     let realType = getRealType(o.type);
@@ -157,10 +158,11 @@ function buildType(
     data.push(`  public ${o.name}: ${realType} = ${initValue};`);
     resetBody.push(`    this.${o.name} = ${initValue};`);
 
-    if (o.useTypeManager) {
+    if (o.useTypeManager && !protocolTypeManagerAlreadyImported) {
       imports.push(
         `import { ProtocolTypeManager } from "@dofus/network/ProtocolTypeManager";`
       );
+      protocolTypeManagerAlreadyImported = true;
     }
 
     if (o.isVector) {
