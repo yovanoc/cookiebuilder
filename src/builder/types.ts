@@ -81,7 +81,7 @@ export function buildTypes(protocol: IProtocol, path: string) {
   writeFileSync(
     join(path, "./dofus/network/ProtocolTypeManager.ts"),
     importsProtocolTypeManager
-      .concat([""], entriesProtocolTypeManager, endProtocolTypeManager)
+      .concat(entriesProtocolTypeManager, endProtocolTypeManager)
       .join("\n")
   );
 }
@@ -182,7 +182,7 @@ function buildType(
             `    for (let i = 0; i < ${o.name}Length; i++) {`,
             `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`,
             `      e.deserialize(reader);`,
-            `      this.${o.name}.push(e);`,
+            `      this.${o.name}.push(e as ${o.type});`,
             `    }`
           );
         } else {
