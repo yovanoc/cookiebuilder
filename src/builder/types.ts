@@ -116,20 +116,21 @@ function buildType(
       `import { BooleanByteWrapper } from "@dofus/network/utils/BooleanByteWrapper";`
     );
     bbw = bbw.sort((a, b) => a.bbwPosition! - b.bbwPosition!);
+    serializeBody.push("    let b = 0;");
+    deserializeBody.push("    const b = reader.readByte();");
     for (const b of bbw) {
       data.push(`  public ${b.name}: boolean = false;`);
       resetBody.push(`    this.${b.name} = false;`);
       serializeBody.push(
-        `    writer.writeByte(BooleanByteWrapper.setFlag(this.${b.name}, ${
-          b.bbwPosition
-        }));`
-      );
-      deserializeBody.push(
-        `    this.${b.name} = BooleanByteWrapper.getFlag(reader.readByte(), ${
-          b.bbwPosition
+        `    b = BooleanByteWrapper.setFlag(b, ${b.bbwPosition}, this.${
+          b.name
         });`
       );
+      deserializeBody.push(
+        `    this.${b.name} = BooleanByteWrapper.getFlag(b, ${b.bbwPosition});`
+      );
     }
+    serializeBody.push("    writer.writeByte(b);");
   }
 
   const usedImports: Map<string, string> = new Map();
@@ -180,9 +181,11 @@ function buildType(
         if (o.useTypeManager) {
           deserializeBody.push(
             `    for (let i = 0; i < ${o.name}Length; i++) {`,
-            `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`,
+            `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
+              o.type
+            };`,
             `      e.deserialize(reader);`,
-            `      this.${o.name}.push(e as ${o.type});`,
+            `      this.${o.name}.push(e);`,
             `    }`
           );
         } else {
@@ -213,7 +216,9 @@ function buildType(
         deserializeBody.push(
           `    this.${
             o.name
-          } = ProtocolTypeManager.getInstance(reader.readUnsignedShort());`
+          } = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
+            o.type
+          };`
         );
         deserializeBody.push(`    this.${o.name}.deserialize(reader);`);
       } else {
