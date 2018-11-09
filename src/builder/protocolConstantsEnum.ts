@@ -15,7 +15,10 @@ export function buildProtocolConstantsEnum(e: ID2Enum, path: string) {
 
   const all = head.concat(entries, bottom).join("\n");
 
-  const filePath = join(path, "./dofus/network/ProtocolConstantsEnum.ts");
+  const filePath = join(
+    path,
+    "./com/ankamagames/dofus/network/ProtocolConstantsEnum.ts"
+  );
   // console.log(`Writing Enum: ${filePath} ...`);
   writeFileSync(filePath, all);
 }

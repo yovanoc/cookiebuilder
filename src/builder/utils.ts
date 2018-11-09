@@ -69,11 +69,7 @@ export function replaceAll(str: string, find: string, replace: string) {
 }
 
 export function cleanNamespace(ns: string) {
-  return replaceAll(
-    "dofus.".concat(ns.split("com.ankamagames.dofus.")[1]),
-    ".",
-    "/"
-  );
+  return replaceAll(ns, ".", "/");
 }
 
 export function getRealType(type: string): string {

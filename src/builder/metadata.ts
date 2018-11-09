@@ -23,7 +23,7 @@ export function buildMetadata(meta: IMetadata, path: string) {
   );
 
   writeFileSync(
-    join(path, "./dofus/network/metadata.ts"),
+    join(path, "./com/ankamagames/dofus/network/metadata.ts"),
     top.concat(data, end).join("\n")
   );
 }

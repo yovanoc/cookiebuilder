@@ -14,8 +14,8 @@ export function buildTypes(protocol: IProtocol, path: string) {
   const exportsIndex: string[] = [];
   let exportsIndexList: string[] = [];
   const importsProtocolTypeManager: string[] = [
-    `import { INetworkType } from "@dofus/network/INetworkType";`,
-    `import Types from "@dofus/network/types";`,
+    `import { INetworkType } from "@com/ankamagames/jerakine/network/INetworkType";`,
+    `import Types from "@com/ankamagames/dofus/network/types";`,
     "",
     "export class ProtocolTypeManager {",
     "  public static getInstance(typeId: number): INetworkType {",
@@ -42,9 +42,9 @@ export function buildTypes(protocol: IProtocol, path: string) {
     mkdirRecursive(folderPath);
 
     const importsFile: string[] = [
-      `import { ICustomDataInput } from "@dofus/network/ICustomDataInput";`,
-      `import { ICustomDataOutput } from "@dofus/network/ICustomDataOutput";`,
-      `import { INetworkType } from "@dofus/network/INetworkType";`
+      `import { ICustomDataInput } from "@com/ankamagames/jerakine/network/ICustomDataInput";`,
+      `import { ICustomDataOutput } from "@com/ankamagames/jerakine/network/ICustomDataOutput";`,
+      `import { INetworkType } from "@com/ankamagames/jerakine/network/INetworkType";`
     ];
 
     if (t.parent !== "") {
@@ -82,11 +82,11 @@ export function buildTypes(protocol: IProtocol, path: string) {
   entriesProtocolTypeManager.push(lastExportProtocolTypeManager.slice(0, -1));
   exportsIndex.push(`};\n`);
   writeFileSync(
-    join(path, "./dofus/network/types/index.ts"),
+    join(path, "./com/ankamagames/dofus/network/types/index.ts"),
     importsIndex.concat([""], exportsIndex).join("\n")
   );
   writeFileSync(
-    join(path, "./dofus/network/ProtocolTypeManager.ts"),
+    join(path, "./com/ankamagames/dofus/network/ProtocolTypeManager.ts"),
     importsProtocolTypeManager
       .concat(entriesProtocolTypeManager, endProtocolTypeManager)
       .join("\n")
@@ -120,7 +120,7 @@ function buildType(
 
   if (bbw.length > 0) {
     imports.push(
-      `import { BooleanByteWrapper } from "@dofus/network/utils/BooleanByteWrapper";`
+      `import { BooleanByteWrapper } from "@com/ankamagames/jerakine/network/utils/BooleanByteWrapper";`
     );
     bbw = bbw.sort((a, b) => a.bbwPosition! - b.bbwPosition!);
     serializeBody.push("    let b = 0;");
@@ -168,7 +168,7 @@ function buildType(
 
     if (o.useTypeManager && !protocolTypeManagerAlreadyImported) {
       imports.push(
-        `import { ProtocolTypeManager } from "@dofus/network/ProtocolTypeManager";`
+        `import { ProtocolTypeManager } from "@com/ankamagames/dofus/network/ProtocolTypeManager";`
       );
       protocolTypeManagerAlreadyImported = true;
     }

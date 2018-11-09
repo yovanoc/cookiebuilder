@@ -13,9 +13,9 @@ export function buildMessages(protocol: IProtocol, path: string) {
   const importsIndex: string[] = [];
   const exportsIndex: string[] = [];
   const importsMessageReceiver: string[] = [
-    `import { CustomDataWrapper } from "@dofus/network/CustomDataWrapper";`,
-    `import { INetworkMessage } from "@dofus/network/INetworkMessage";`,
-    `import Messages from "@dofus/network/messages";`,
+    `import { CustomDataWrapper } from "@com/ankamagames/jerakine/network/CustomDataWrapper";`,
+    `import { INetworkMessage } from "@com/ankamagames/jerakine/network/INetworkMessage";`,
+    `import Messages from "@com/ankamagames/dofus/network/messages";`,
     "",
     "export class MessageReceiver {",
     "  public static parse(",
@@ -51,11 +51,11 @@ export function buildMessages(protocol: IProtocol, path: string) {
 
     const importsFile: string[] = [
       `import ByteArray from "@utils/ByteArray";`,
-      `import { CustomDataWrapper } from "@dofus/network/CustomDataWrapper";`,
-      `import { ICustomDataInput } from "@dofus/network/ICustomDataInput";`,
-      `import { ICustomDataOutput } from "@dofus/network/ICustomDataOutput";`,
-      `import { INetworkMessage } from "@dofus/network/INetworkMessage";`,
-      `import { NetworkMessage } from "@dofus/network/NetworkMessage";`
+      `import { CustomDataWrapper } from "@com/ankamagames/jerakine/network/CustomDataWrapper";`,
+      `import { ICustomDataInput } from "@com/ankamagames/jerakine/network/ICustomDataInput";`,
+      `import { ICustomDataOutput } from "@com/ankamagames/jerakine/network/ICustomDataOutput";`,
+      `import { INetworkMessage } from "@com/ankamagames/jerakine/network/INetworkMessage";`,
+      `import { NetworkMessage } from "@com/ankamagames/jerakine/network/NetworkMessage";`
     ];
 
     if (m.parent !== "") {
@@ -93,11 +93,11 @@ export function buildMessages(protocol: IProtocol, path: string) {
   entriesMessageReceiver.push(lastExportMessageReceiver.slice(0, -1));
   exportsIndex.push(`};\n`);
   writeFileSync(
-    join(path, "./dofus/network/messages/index.ts"),
+    join(path, "./com/ankamagames/dofus/network/messages/index.ts"),
     importsIndex.concat([""], exportsIndex).join("\n")
   );
   writeFileSync(
-    join(path, "./dofus/network/MessageReceiver.ts"),
+    join(path, "./com/ankamagames/dofus/network/MessageReceiver.ts"),
     importsMessageReceiver
       .concat(entriesMessageReceiver, endMessageReceiver)
       .join("\n")
@@ -131,7 +131,7 @@ function buildMessage(
 
   if (bbw.length > 0) {
     imports.push(
-      `import { BooleanByteWrapper } from "@dofus/network/utils/BooleanByteWrapper";`
+      `import { BooleanByteWrapper } from "@com/ankamagames/jerakine/network/utils/BooleanByteWrapper";`
     );
     bbw = bbw.sort((a, b) => a.bbwPosition! - b.bbwPosition!);
     serializeBody.push("    let b = 0;");
@@ -179,7 +179,7 @@ function buildMessage(
 
     if (o.useTypeManager && !protocolTypeManagerAlreadyImported) {
       imports.push(
-        `import { ProtocolTypeManager } from "@dofus/network/ProtocolTypeManager";`
+        `import { ProtocolTypeManager } from "@com/ankamagames/dofus/network/ProtocolTypeManager";`
       );
       protocolTypeManagerAlreadyImported = true;
     }
