@@ -35,6 +35,7 @@ export function buildMessages(protocol: IProtocol, path: string) {
   ];
   const entriesMessageReceiver: string[] = [];
   const endMessageReceiver = ["  };", "}\n"];
+  let exportsIndexList: string[] = [];
   exportsIndex.push("export default {");
   for (const m of protocol.messages) {
     const clean = cleanNamespace(m.package);
@@ -42,7 +43,9 @@ export function buildMessages(protocol: IProtocol, path: string) {
     entriesMessageReceiver.push(
       `    ${m.protocolId}: () => new Messages.${m.name}(),`
     );
-    exportsIndex.push(`  ${m.name},`);
+
+    exportsIndexList.push(m.name);
+
     const folderPath = join(path, clean);
     mkdirRecursive(folderPath);
 
@@ -78,6 +81,12 @@ export function buildMessages(protocol: IProtocol, path: string) {
     // console.log(`Writing Message: ${filePath} ...`);
     writeFileSync(filePath, all);
   }
+
+  exportsIndexList = exportsIndexList.sort();
+  for (const e of exportsIndexList) {
+    exportsIndex.push(`  ${e},`);
+  }
+
   const lastExport = exportsIndex.pop()!;
   exportsIndex.push(lastExport.slice(0, -1));
   const lastExportMessageReceiver = entriesMessageReceiver.pop()!;
@@ -85,7 +94,7 @@ export function buildMessages(protocol: IProtocol, path: string) {
   exportsIndex.push(`};\n`);
   writeFileSync(
     join(path, "./dofus/network/messages/index.ts"),
-    importsIndex.concat(["\n"], exportsIndex).join("\n")
+    importsIndex.concat([""], exportsIndex).join("\n")
   );
   writeFileSync(
     join(path, "./dofus/network/MessageReceiver.ts"),

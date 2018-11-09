@@ -12,6 +12,7 @@ import {
 export function buildTypes(protocol: IProtocol, path: string) {
   const importsIndex: string[] = [];
   const exportsIndex: string[] = [];
+  let exportsIndexList: string[] = [];
   const importsProtocolTypeManager: string[] = [
     `import { INetworkType } from "@dofus/network/INetworkType";`,
     `import Types from "@dofus/network/types";`,
@@ -36,7 +37,7 @@ export function buildTypes(protocol: IProtocol, path: string) {
     entriesProtocolTypeManager.push(
       `    ${t.protocolId}: () => new Types.${t.name}(),`
     );
-    exportsIndex.push(`  ${t.name},`);
+    exportsIndexList.push(t.name);
     const folderPath = join(path, clean);
     mkdirRecursive(folderPath);
 
@@ -69,6 +70,12 @@ export function buildTypes(protocol: IProtocol, path: string) {
     // console.log(`Writing Type: ${filePath} ...`);
     writeFileSync(filePath, all);
   }
+
+  exportsIndexList = exportsIndexList.sort();
+  for (const e of exportsIndexList) {
+    exportsIndex.push(`  ${e},`);
+  }
+
   const lastExport = exportsIndex.pop()!;
   exportsIndex.push(lastExport.slice(0, -1));
   const lastExportProtocolTypeManager = entriesProtocolTypeManager.pop()!;
@@ -76,7 +83,7 @@ export function buildTypes(protocol: IProtocol, path: string) {
   exportsIndex.push(`};\n`);
   writeFileSync(
     join(path, "./dofus/network/types/index.ts"),
-    importsIndex.concat(exportsIndex).join("\n")
+    importsIndex.concat([""], exportsIndex).join("\n")
   );
   writeFileSync(
     join(path, "./dofus/network/ProtocolTypeManager.ts"),
