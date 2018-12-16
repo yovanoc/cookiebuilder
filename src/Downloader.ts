@@ -31,21 +31,21 @@ export default class Downloader {
   ): Promise<{ file: IFile; handler: () => ControllablePromise<void> }> {
     const res = await axios.get(`${Downloader.BASE_URL}/cytrus.json`);
     const json = res.data;
-    const winVersion = json.Games.dofus.Platforms.windows.main;
+    const winVersion = json.games.dofus.platforms.windows.main;
 
     const gameVersionRes = await axios.get(
       `${Downloader.BASE_URL}/dofus/releases/main/windows/${winVersion}.json`
     );
 
-    const { Hash, Size } = gameVersionRes.data.main.Files["DofusInvoker.swf"];
+    const file = gameVersionRes.data.main.files["DofusInvoker.swf"];
 
     if (existsSync(path)) {
       unlinkSync(path);
     }
 
     return {
-      file: { hash: Hash, size: Size },
-      handler: Downloader.getDownloadHandler({ hash: Hash, size: Size }, path)
+      file,
+      handler: Downloader.getDownloadHandler(file, path)
     };
   }
 

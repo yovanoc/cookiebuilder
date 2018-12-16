@@ -16,7 +16,7 @@ const args = yargs
   .command("extract", "Extract the protocol.")
   .option("s", {
     description:
-      "DofusInvorker path. If not provided, we doawnload the last one.",
+      "DofusInvoker path. If not provided, we download the last one.",
     required: false
   })
   .alias("s", ["src", "source"])
@@ -31,8 +31,12 @@ const args = yargs
   })
   .alias("o", ["out", "output"])
   .example(
-    "yarn start e -o protocol.json -s ./tests/DofusInvoker.swf",
+    "cookiebuilder extract -o protocol.json -s ./tests/DofusInvoker.swf",
     "Extract the protocol from the Invoker passed in arguments."
+  )
+  .example(
+    "cookiebuilder build -o protocol/ -s protocol.json",
+    "Build the protocol from the protocol.json generated with the extract command."
   )
   .showHelpOnFail(false, "whoops, something went wrong! run with --help").argv;
 
@@ -41,11 +45,11 @@ const path = join(homedir(), "DofusInvoker.swf");
 
 let protocol: IProtocol;
 
-if (args._[0] === "extract") {
-  if (!args.src) {
-    tasks.push(Downloader.getDownloadTask(path));
-  }
+if (!args.src) {
+  tasks.push(Downloader.getDownloadTask(path));
+}
 
+if (args._[0] === "extract") {
   tasks.push({
     task: (ctx, task) => {
       return new Promise<void>(resolve => {
@@ -65,29 +69,33 @@ if (args._[0] === "extract") {
     title: "Extract protocol"
   });
 } else if (args._[0] === "build") {
+  if (args.src) {
+    protocol = JSON.parse(fs.readFileSync(args.src, { encoding: "utf8" }));
+  } else {
+    // TODO: Refactor this to add createExtractTask method
+    tasks.push({
+      task: (ctxx, taskk) => {
+        return new Promise<void>(resolvee => {
+          const reader = new SwfReader(args.src || path);
+          const file = reader.getFile();
+          const doAbc = file.tags.find(
+            tag => tag.code === TagCode.DoABC
+          ) as ITagDoAbc;
+          const abcFile = doAbc.abcFile;
+
+          protocol = extract(abcFile);
+
+          resolvee();
+        });
+      },
+      title: "Extract protocol"
+    });
+  }
+
   tasks.push({
     task: (ctx, task) => {
       return new Promise<void>(resolve => {
-        const reader = new SwfReader(args.src || path);
-        const file = reader.getFile();
-        const doAbc = file.tags.find(
-          tag => tag.code === TagCode.DoABC
-        ) as ITagDoAbc;
-        const abcFile = doAbc.abcFile;
-
-        protocol = extract(abcFile);
-        fs.writeFileSync(args.out, JSON.stringify(protocol));
-
-        resolve();
-      });
-    },
-    title: "Extract protocol"
-  });
-
-  tasks.push({
-    task: (ctx, task) => {
-      return new Promise<void>(resolve => {
-        build(protocol, "./protocol");
+        build(protocol, args.out);
         resolve();
       });
     },

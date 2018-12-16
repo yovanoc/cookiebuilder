@@ -23,21 +23,21 @@ describe("Main Tests", () => {
     const result = expect(protocol.version).to.deep.equal({
       major: 2,
       minor: 42,
+      patch: 0,
       release: 0,
-      revision: 1027565,
-      patch: 0
+      revision: 1027565
     });
   });
 
   it("should have enums", () => {
-    const result = expect(protocol.enums.length).to.equal(95);
+    const result = expect(protocol.enums.length).to.equal(94);
   });
 
   it("should have messages", () => {
-    const result = expect(protocol.messages.length).to.equal(1019);
+    const result = expect(protocol.messages.length).to.equal(1054);
   });
 
   it("should have types", () => {
-    const result = expect(protocol.types.length).to.equal(301);
+    const result = expect(protocol.types.length).to.equal(307);
   });
 });
