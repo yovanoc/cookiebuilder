@@ -190,13 +190,13 @@ function buildMessage(
         `    const ${o.name}Length = reader.readUnsignedShort();`
       );
       if (o.useTypeManager || isCustomType) {
-        serializeBody.push(
-          `    for (const e of this.${o.name}) {`,
-          `      writer.writeShort(e.getTypeId());`,
-          `      e.serialize(writer);`,
-          `    }`
-        );
         if (o.useTypeManager) {
+          serializeBody.push(
+            `    for (const e of this.${o.name}) {`,
+            `      writer.writeShort(e.getTypeId());`,
+            `      e.serialize(writer);`,
+            `    }`
+          );
           deserializeBody.push(
             `    for (let i = 0; i < ${o.name}Length; i++) {`,
             `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
@@ -207,6 +207,11 @@ function buildMessage(
             `    }`
           );
         } else {
+          serializeBody.push(
+            `    for (const e of this.${o.name}) {`,
+            `      e.serialize(writer);`,
+            `    }`
+          );
           deserializeBody.push(
             `    for (let i = 0; i < ${o.name}Length; i++) {`,
             `      const e = new ${o.type}();`,
@@ -230,6 +235,9 @@ function buildMessage(
       }
     } else {
       if (o.useTypeManager) {
+        serializeBody.push(
+          `    writer.writeShort(this.${o.name}.getTypeId());`
+        );
         serializeBody.push(`    this.${o.name}.serialize(writer);`);
         deserializeBody.push(
           `    this.${
