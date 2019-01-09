@@ -18,7 +18,10 @@ export default class Downloader {
                 `${((stats.downloadedSize / file.size) * 100).toFixed(2)}%`
               )
             )
-            .then(() => resolve())
+            .then(() => {
+              render("100%");
+              resolve();
+            })
             .catch(() => reject());
         });
       },

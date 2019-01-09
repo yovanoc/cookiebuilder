@@ -11,11 +11,10 @@ import {
 
 export function buildMessages(protocol: IProtocol, path: string) {
   const importsIndex: string[] = [];
-  const exportsIndex: string[] = [];
   const importsMessageReceiver: string[] = [
     `import { CustomDataWrapper } from "@com/ankamagames/jerakine/network/CustomDataWrapper";`,
     `import { INetworkMessage } from "@com/ankamagames/jerakine/network/INetworkMessage";`,
-    `import Messages from "@com/ankamagames/dofus/network/messages";`,
+    `import * as Messages from "@com/ankamagames/dofus/network/messages";`,
     "",
     "export class MessageReceiver {",
     "  public static parse(",
@@ -35,27 +34,20 @@ export function buildMessages(protocol: IProtocol, path: string) {
   ];
   const entriesMessageReceiver: string[] = [];
   const endMessageReceiver = ["  };", "}\n"];
-  let exportsIndexList: string[] = [];
-  exportsIndex.push("export default {");
   for (const m of protocol.messages) {
     const clean = cleanNamespace(m.package);
-    importsIndex.push(`import { ${m.name} } from "@${clean}/${m.name}";`);
+    importsIndex.push(`export { ${m.name} } from "@${clean}/${m.name}";`);
     entriesMessageReceiver.push(
       `    ${m.protocolId}: () => new Messages.${m.name}(),`
     );
-
-    exportsIndexList.push(m.name);
 
     const folderPath = join(path, clean);
     mkdirRecursive(folderPath);
 
     const importsFile: string[] = [
-      `import ByteArray from "@utils/ByteArray";`,
-      `import { CustomDataWrapper } from "@com/ankamagames/jerakine/network/CustomDataWrapper";`,
       `import { ICustomDataInput } from "@com/ankamagames/jerakine/network/ICustomDataInput";`,
       `import { ICustomDataOutput } from "@com/ankamagames/jerakine/network/ICustomDataOutput";`,
-      `import { INetworkMessage } from "@com/ankamagames/jerakine/network/INetworkMessage";`,
-      `import { NetworkMessage } from "@com/ankamagames/jerakine/network/NetworkMessage";`
+      `import { INetworkMessage } from "@com/ankamagames/jerakine/network/INetworkMessage";`
     ];
 
     if (m.parent !== "") {
@@ -63,6 +55,10 @@ export function buildMessages(protocol: IProtocol, path: string) {
       const cleanNs = cleanNamespace(parent.package);
       importsFile.push(
         `import { ${m.parent} } from "@${cleanNs}/${m.parent}";`
+      );
+    } else {
+      importsFile.push(
+        `import { NetworkMessage } from "@com/ankamagames/jerakine/network/NetworkMessage";`
       );
     }
 
@@ -82,19 +78,11 @@ export function buildMessages(protocol: IProtocol, path: string) {
     writeFileSync(filePath, all);
   }
 
-  exportsIndexList = exportsIndexList.sort();
-  for (const e of exportsIndexList) {
-    exportsIndex.push(`  ${e},`);
-  }
-
-  const lastExport = exportsIndex.pop()!;
-  exportsIndex.push(lastExport.slice(0, -1));
   const lastExportMessageReceiver = entriesMessageReceiver.pop()!;
   entriesMessageReceiver.push(lastExportMessageReceiver.slice(0, -1));
-  exportsIndex.push(`};\n`);
   writeFileSync(
     join(path, "./com/ankamagames/dofus/network/messages/index.ts"),
-    importsIndex.concat([""], exportsIndex).join("\n")
+    importsIndex.join("\n")
   );
   writeFileSync(
     join(path, "./com/ankamagames/dofus/network/MessageReceiver.ts"),
@@ -279,22 +267,6 @@ function buildMessage(
   }
   data.push(...resetBody);
   data.push("  }");
-
-  data.push(
-    "",
-    "  public pack(param1: ICustomDataOutput): void {",
-    `    const loc2 = new ByteArray();`,
-    `    this.serialize(new CustomDataWrapper(loc2));`,
-    `    NetworkMessage.writePacket(param1, this.getMessageId(), loc2);`,
-    "  }"
-  );
-
-  data.push(
-    "",
-    "  public unpack(param1: ICustomDataInput): void {",
-    `    this.deserialize(param1);`,
-    "  }"
-  );
 
   data.push("", "  public serialize(writer: ICustomDataOutput): void {");
   if (serializeBody.length === 0) {

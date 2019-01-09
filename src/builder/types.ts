@@ -11,11 +11,9 @@ import {
 
 export function buildTypes(protocol: IProtocol, path: string) {
   const importsIndex: string[] = [];
-  const exportsIndex: string[] = [];
-  let exportsIndexList: string[] = [];
   const importsProtocolTypeManager: string[] = [
     `import { INetworkType } from "@com/ankamagames/jerakine/network/INetworkType";`,
-    `import Types from "@com/ankamagames/dofus/network/types";`,
+    `import * as Types from "@com/ankamagames/dofus/network/types";`,
     "",
     "export class ProtocolTypeManager {",
     "  public static getInstance(typeId: number): INetworkType {",
@@ -30,14 +28,12 @@ export function buildTypes(protocol: IProtocol, path: string) {
   ];
   const entriesProtocolTypeManager: string[] = [];
   const endProtocolTypeManager = ["  };", "}\n"];
-  exportsIndex.push("export default {");
   for (const t of protocol.types) {
     const clean = cleanNamespace(t.package);
-    importsIndex.push(`import { ${t.name} } from "@${clean}/${t.name}";`);
+    importsIndex.push(`export { ${t.name} } from "@${clean}/${t.name}";`);
     entriesProtocolTypeManager.push(
       `    ${t.protocolId}: () => new Types.${t.name}(),`
     );
-    exportsIndexList.push(t.name);
     const folderPath = join(path, clean);
     mkdirRecursive(folderPath);
 
@@ -71,19 +67,11 @@ export function buildTypes(protocol: IProtocol, path: string) {
     writeFileSync(filePath, all);
   }
 
-  exportsIndexList = exportsIndexList.sort();
-  for (const e of exportsIndexList) {
-    exportsIndex.push(`  ${e},`);
-  }
-
-  const lastExport = exportsIndex.pop()!;
-  exportsIndex.push(lastExport.slice(0, -1));
   const lastExportProtocolTypeManager = entriesProtocolTypeManager.pop()!;
   entriesProtocolTypeManager.push(lastExportProtocolTypeManager.slice(0, -1));
-  exportsIndex.push(`};\n`);
   writeFileSync(
     join(path, "./com/ankamagames/dofus/network/types/index.ts"),
-    importsIndex.concat([""], exportsIndex).join("\n")
+    importsIndex.join("\n")
   );
   writeFileSync(
     join(path, "./com/ankamagames/dofus/network/ProtocolTypeManager.ts"),

@@ -11,7 +11,7 @@ import { build } from "./builder";
 import Downloader from "./Downloader";
 import { extract, IProtocol } from "./extractor";
 
-const args = yargs
+const args: any = yargs
   .usage("Usage: $0 <command>") // (-e (--src [filePath]) --out [jsonFilePath]) or (-b --src [jsonFilePath])
   .command("extract", "Extract the protocol.")
   .option("s", {
