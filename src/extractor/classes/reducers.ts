@@ -18,7 +18,7 @@ export function reduceType(f: ID2ClassField) {
   if (f.type === "Boolean") {
     f.type = "bool";
   }
-  if (!f.writeMethod) {
+  if (!f.writeMethod || f.writeMethod === "") {
     return;
   } else if (f.writeMethod === "writeBytes") {
     // hack to get NetworkDataContainerMessage working
@@ -31,7 +31,7 @@ export function reduceType(f: ID2ClassField) {
   if (reduced) {
     // Sometimes, unsigned variables are written with signed functions
     if (f.type === "uint" && reduced.startsWith("int")) {
-      reduced = `u${reduced}`;
+      reduced = `u${reduced}`; // dirty but works for intX types
     }
     f.type = reduced;
   }

@@ -173,10 +173,24 @@ function buildMessage(
     }
 
     if (o.isVector) {
-      serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
-      deserializeBody.push(
-        `    const ${o.name}Length = reader.readUnsignedShort();`
-      );
+      if (o.isDynamicLength) {
+        serializeBody.push(
+          `    writer.${o.writeLengthMethod}(this.${o.name}.length);`
+        );
+        deserializeBody.push(
+          `    const ${o.name}Length = reader.${o.writeLengthMethod!.replace(
+            "write",
+            "read"
+          )}();`
+        );
+      } else {
+        if (!o.length) {
+          serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
+          deserializeBody.push(
+            `    const ${o.name}Length = reader.readUnsignedShort();`
+          );
+        }
+      }
       if (o.useTypeManager || isCustomType) {
         if (o.useTypeManager) {
           serializeBody.push(
@@ -186,7 +200,9 @@ function buildMessage(
             `    }`
           );
           deserializeBody.push(
-            `    for (let i = 0; i < ${o.name}Length; i++) {`,
+            `    for (let i = 0; i < ${
+              o.length ? o.length : `${o.name}Length`
+            }; i++) {`,
             `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
               o.type
             };`,
@@ -201,7 +217,9 @@ function buildMessage(
             `    }`
           );
           deserializeBody.push(
-            `    for (let i = 0; i < ${o.name}Length; i++) {`,
+            `    for (let i = 0; i < ${
+              o.length ? o.length : `${o.name}Length`
+            }; i++) {`,
             `      const e = new ${o.type}();`,
             `      e.deserialize(reader);`,
             `      this.${o.name}.push(e);`,
@@ -215,7 +233,9 @@ function buildMessage(
           `    }`
         );
         deserializeBody.push(
-          `    for (let i = 0; i < ${o.name}Length; i++) {`,
+          `    for (let i = 0; i < ${
+            o.length ? o.length : `${o.name}Length`
+          }; i++) {`,
           `      this.${o.name}.push(reader.${o.writeMethod &&
             o.writeMethod.replace("write", "read")}());`,
           `    }`

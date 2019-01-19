@@ -92,7 +92,7 @@ export function handleVecPropDynamicLen(
   const push = instrs[5] as IPushbyteInstr;
   const len = push.byteValue;
 
-  if (!last || last.isVector || last.isDynamicLength) {
+  if (!last || !last.isVector || last.isDynamicLength) {
     throw new Error("vector found but no dynamic vector");
   }
 
@@ -244,7 +244,7 @@ export function handleVecPropLength(
     return undefined;
   }
 
-  if (getLenMultiname.name !== "") {
+  if (getLenMultiname.name !== "length") {
     return undefined;
   }
 
@@ -264,8 +264,8 @@ export function handleVecPropLength(
     return undefined;
   }
 
-  field.isDynamicLength = true; // TODO: Not sure?
-  field.writeMethod = writeMethod;
+  field.isDynamicLength = true;
+  field.writeLengthMethod = writeMethod;
 
   return field;
 }
