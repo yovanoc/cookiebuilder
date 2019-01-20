@@ -162,7 +162,12 @@ function buildType(
     }
 
     if (o.isVector) {
-      if (o.isDynamicLength) {
+      if (o.useTypeManager) {
+        serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
+        deserializeBody.push(
+          `    const ${o.name}Length = reader.readUnsignedShort();`
+        );
+      } else if (o.isDynamicLength && o.writeLengthMethod !== "writeShort") {
         serializeBody.push(
           `    writer.${o.writeLengthMethod}(this.${o.name}.length);`
         );
@@ -172,13 +177,11 @@ function buildType(
             "read"
           )}();`
         );
-      } else {
-        if (!o.length) {
-          serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
-          deserializeBody.push(
-            `    const ${o.name}Length = reader.readUnsignedShort();`
-          );
-        }
+      } else if (!o.length) {
+        serializeBody.push(`    writer.writeShort(this.${o.name}.length);`);
+        deserializeBody.push(
+          `    const ${o.name}Length = reader.readUnsignedShort();`
+        );
       }
       if (o.useTypeManager || isCustomType) {
         if (o.useTypeManager) {

@@ -54,7 +54,7 @@ const typesToMethodMap = new Map([
 
 export function reduceMethod(f: ID2ClassField) {
   let m = typesToMethodMap.get(f.type);
-  if (!m || !f.writeMethod) {
+  if (!m || !f.writeMethod || f.writeMethod === "") {
     return;
   }
   if (f.writeMethod.includes("Var")) {
