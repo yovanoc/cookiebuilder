@@ -8,6 +8,7 @@ import {
   NamespaceKind
 } from "xswf/dist/abcFile/types/namespace";
 import { Trait, TraitKind } from "xswf/dist/abcFile/types/trait";
+import { ID2Class } from ".";
 
 export function findMethodWithPrefix(
   c: IClassInfo,
@@ -48,4 +49,109 @@ export function isAs3ScalarType(t: string): boolean {
     }
   }
   return false;
+}
+
+export function generateFlashGeomClasses(packageName: string): ID2Class[] {
+  const classesList: ID2Class[] = [];
+
+  classesList.push({
+    fields: [
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "x",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "y",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "length",
+        type: "float32"
+      }
+    ],
+    name: "Point",
+    package: packageName,
+    parent: ""
+  });
+  classesList.push({
+    fields: [
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "x",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "y",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "width",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "height",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "top",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "right",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "left",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "bottom",
+        type: "int32"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "bottomRight",
+        type: "Point"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "topLeft",
+        type: "Point"
+      },
+      {
+        isVector: false,
+        isVectorVector: false,
+        name: "size",
+        type: "Point"
+      },
+    ],
+    name: "Rectangle",
+    package: packageName,
+    parent: ""
+  });
+
+  return classesList;
 }
