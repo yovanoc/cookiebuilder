@@ -11,7 +11,7 @@ describe("Main Tests", () => {
     protocol = await CookieBuilder.extract()!;
   });
 
-  it("instanciates the class", () => {
+  it("instantiates the class", () => {
     const result = expect(builder).not.undefined;
   });
 
@@ -30,14 +30,14 @@ describe("Main Tests", () => {
   });
 
   it("should have enums", () => {
-    const result = expect(protocol.enums.length).to.equal(94);
+    const result = expect(protocol.enums.length).to.equal(87);
   });
 
   it("should have messages", () => {
-    const result = expect(protocol.messages.length).to.equal(1054);
+    const result = expect(protocol.messages.length).to.equal(1059);
   });
 
   it("should have types", () => {
-    const result = expect(protocol.types.length).to.equal(307);
+    const result = expect(protocol.types.length).to.equal(309);
   });
 });
