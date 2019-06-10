@@ -53,7 +53,7 @@ export function buildTypes(protocol: IProtocol, path: string) {
 
     const head = [
       `export class ${t.name} ${
-        t.parent !== "" ? `extends ${t.parent} ` : ""
+      t.parent !== "" ? `extends ${t.parent} ` : ""
       }implements INetworkType {`
     ];
 
@@ -118,7 +118,7 @@ function buildType(
       resetBody.push(`    this.${b.name} = false;`);
       serializeBody.push(
         `    b = BooleanByteWrapper.setFlag(b, ${b.bbwPosition}, this.${
-          b.name
+        b.name
         });`
       );
       deserializeBody.push(
@@ -149,6 +149,10 @@ function buildType(
     }
     if (o.isVector) {
       realType += "[]";
+      initValue = "[]";
+    }
+    if (o.isVectorVector) {
+      realType += "[][]";
       initValue = "[]";
     }
     data.push(`  public ${o.name}: ${realType} = ${initValue};`);
@@ -193,10 +197,10 @@ function buildType(
           );
           deserializeBody.push(
             `    for (let i = 0; i < ${
-              o.length ? o.length : `${o.name}Length`
+            o.length ? o.length : `${o.name}Length`
             }; i++) {`,
             `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
-              o.type
+            o.type
             };`,
             `      e.deserialize(reader);`,
             `      this.${o.name}.push(e);`,
@@ -210,7 +214,7 @@ function buildType(
           );
           deserializeBody.push(
             `    for (let i = 0; i < ${
-              o.length ? o.length : `${o.name}Length`
+            o.length ? o.length : `${o.name}Length`
             }; i++) {`,
             `      const e = new ${o.type}();`,
             `      e.deserialize(reader);`,
@@ -226,10 +230,10 @@ function buildType(
         );
         deserializeBody.push(
           `    for (let i = 0; i < ${
-            o.length ? o.length : `${o.name}Length`
+          o.length ? o.length : `${o.name}Length`
           }; i++) {`,
           `      this.${o.name}.push(reader.${o.writeMethod &&
-            o.writeMethod.replace("write", "read")}());`,
+          o.writeMethod.replace("write", "read")}());`,
           `    }`
         );
       }
@@ -241,9 +245,9 @@ function buildType(
         serializeBody.push(`    this.${o.name}.serialize(writer);`);
         deserializeBody.push(
           `    this.${
-            o.name
+          o.name
           } = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
-            o.type
+          o.type
           };`
         );
         deserializeBody.push(`    this.${o.name}.deserialize(reader);`);
@@ -256,9 +260,9 @@ function buildType(
           serializeBody.push(`    writer.${o.writeMethod}(this.${o.name});`);
           deserializeBody.push(
             `    this.${o.name} = reader.${
-              o.writeMethod
-                ? o.writeMethod.replace("write", "read")
-                : `${o.method}`
+            o.writeMethod
+              ? o.writeMethod.replace("write", "read")
+              : `${o.method}`
             }();`
           );
         }

@@ -29,7 +29,7 @@ import {
   preprocessBytecode
 } from "./handlers";
 import { reduceMethod, reduceType } from "./reducers";
-import { findMethodWithPrefix, isPublicNamespace } from "./utils";
+import { findMethodWithPrefix, generateFlashGeomClasses, isPublicNamespace } from "./utils";
 
 export interface ID2ClassField {
   name: string;
@@ -37,6 +37,7 @@ export interface ID2ClassField {
   writeMethod?: string;
   method?: string;
   isVector: boolean;
+  isVectorVector: boolean;
   isDynamicLength?: boolean;
   length?: number;
   writeLengthMethod?: string;
@@ -50,8 +51,8 @@ export interface ID2Class {
   name: string;
   parent: string;
   fields: ID2ClassField[];
-  protocolId: number;
-  useHashFunc: boolean;
+  protocolId?: number;
+  useHashFunc?: boolean;
 }
 
 export interface ID2MessagesAndTypes {
@@ -88,6 +89,59 @@ export function extractD2MessagesAndTypes(
     messages,
     types
   };
+}
+
+export function extractD2DataCenters(abcFile: IAbcFile): ID2Class[] {
+  const dataCenters: ID2Class[] = [];
+
+  const filesToReplaceInDataCenterNamespace = [
+    "com.ankamagames.dofus.types.data:AnimFunData",
+    "com.ankamagames.tiphon.types:TransformData"
+  ];
+  const dataCenterPrefixes = [
+    "com.ankamagames.dofus.datacenter.",
+    ...filesToReplaceInDataCenterNamespace
+  ];
+
+  for (const klass of abcFile.classes) {
+    if (!klass.instance.protectedNs) {
+      continue;
+    }
+    const namespace = klass.instance.protectedNs.name;
+    const isDataCenter = dataCenterPrefixes.some((prefix) => namespace.startsWith(prefix));
+    if (!isDataCenter) {
+      continue;
+    }
+
+    const superName = (klass.instance.supername as IQName);
+    let parent = "";
+    if (superName && superName.name !== "Proxy" && superName.name !== "Object") {
+      parent = superName.name;
+    }
+
+    const fields = extractMessageFields(klass);
+
+    for (const field of fields) {
+      reduceType(field);
+    }
+
+    let packageName = klass.instance.name.ns.name;
+    if (filesToReplaceInDataCenterNamespace.some((prefix) => namespace.startsWith(prefix))) {
+      packageName = "com.ankamagames.dofus.datacenter";
+    }
+
+    dataCenters.push({
+      fields,
+      name: klass.instance.name.name,
+      package: packageName,
+      parent
+    });
+  }
+
+  // Manually add some Flash classes.
+  dataCenters.push(...generateFlashGeomClasses("com.ankamagames.dofus.datacenter"));
+
+  return dataCenters;
 }
 
 export function extractD2Class(klass: IClassInfo): ID2Class {
@@ -135,11 +189,18 @@ export function extractD2Class(klass: IClassInfo): ID2Class {
 function extractMessageFields(c: IClassInfo): ID2ClassField[] {
   const createField = (name: string, tt: IQName | ITypeName): ID2ClassField => {
     let isVector = false;
+    let isVectorVector = false;
+
     const t = tt.name;
     let type = typeof t === "string" ? t : "";
     if (tt.kind === MultinameKind.TypeName) {
-      type = (tt.names[0] as IQName).name;
-      isVector = true;
+      if (tt.names[0].kind === MultinameKind.TypeName) {
+        type = ((tt.names[0] as ITypeName).names[0] as IQName).name;
+        isVectorVector = true;
+      } else {
+        type = (tt.names[0] as IQName).name;
+        isVector = true;
+      }
     } else if (t === "ByteArray") {
       isVector = true;
       type = "uint";
@@ -147,6 +208,7 @@ function extractMessageFields(c: IClassInfo): ID2ClassField[] {
 
     return {
       isVector,
+      isVectorVector,
       name,
       type
     };

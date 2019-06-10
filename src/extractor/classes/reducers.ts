@@ -14,20 +14,31 @@ const writeMethodTypesMap = new Map([
   ["writeUTF", "string"]
 ]);
 
+const typesMap = new Map([
+  ["int", "int32"],
+  ["uint", "uint32"],
+  ["Number", "float32"],
+  ["String", "string"],
+  ["Object", "uint32"]
+]);
+
 export function reduceType(f: ID2ClassField) {
   if (f.type === "Boolean") {
     f.type = "bool";
   }
-  if (!f.writeMethod || f.writeMethod === "") {
-    return;
-  } else if (f.writeMethod === "writeBytes") {
-    // hack to get NetworkDataContainerMessage working
-    f.isVector = true;
-    f.isDynamicLength = true;
-    f.writeLengthMethod = "writeVarInt";
-    f.writeMethod = "writeByte";
+  let reduced: string | undefined;
+  if (f.writeMethod && f.writeMethod !== "") {
+    if (f.writeMethod === "writeBytes") {
+      // hack to get NetworkDataContainerMessage working
+      f.isVector = true;
+      f.isDynamicLength = true;
+      f.writeLengthMethod = "writeVarInt";
+      f.writeMethod = "writeByte";
+    }
+    reduced = writeMethodTypesMap.get(f.writeMethod);
+  } else {
+    reduced = typesMap.get(f.type);
   }
-  let reduced = writeMethodTypesMap.get(f.writeMethod);
   if (reduced) {
     // Sometimes, unsigned variables are written with signed functions
     if (f.type === "uint" && reduced.startsWith("int")) {

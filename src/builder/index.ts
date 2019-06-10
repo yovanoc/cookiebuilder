@@ -1,4 +1,5 @@
 import { IProtocol } from "@/extractor";
+import { buildDataCenters } from "./dataCenters";
 import { buildEnums } from "./enums";
 import { buildMessages } from "./messages";
 import { buildMetadata } from "./metadata";
@@ -11,6 +12,7 @@ export function build(protocol: IProtocol, path: string) {
   mkdirRecursive(path);
   buildTypes(protocol, path);
   buildMessages(protocol, path);
+  buildDataCenters(protocol, path);
   buildEnums(protocol.enums, path);
   buildMetadata(protocol.metadata, path);
   buildProtocolConstantsEnum(protocol.protocolConstantsEnum, path);

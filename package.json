@@ -1,6 +1,6 @@
 {
   "name": "cookiebuilder",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Dofus Protocol Builder",
   "main": "dist/Library.js",
   "types": "dist/Library.d.ts",

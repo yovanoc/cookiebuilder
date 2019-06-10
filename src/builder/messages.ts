@@ -64,7 +64,7 @@ export function buildMessages(protocol: IProtocol, path: string) {
 
     const head = [
       `export class ${m.name} ${
-        m.parent !== "" ? `extends ${m.parent}` : "extends NetworkMessage"
+      m.parent !== "" ? `extends ${m.parent}` : "extends NetworkMessage"
       } implements INetworkMessage {`
     ];
 
@@ -129,7 +129,7 @@ function buildMessage(
       resetBody.push(`    this.${b.name} = false;`);
       serializeBody.push(
         `    b = BooleanByteWrapper.setFlag(b, ${b.bbwPosition}, this.${
-          b.name
+        b.name
         });`
       );
       deserializeBody.push(
@@ -160,6 +160,10 @@ function buildMessage(
     }
     if (o.isVector) {
       realType += "[]";
+      initValue = "[]";
+    }
+    if (o.isVectorVector) {
+      realType += "[][]";
       initValue = "[]";
     }
     data.push(`  public ${o.name}: ${realType} = ${initValue};`);
@@ -204,10 +208,10 @@ function buildMessage(
           );
           deserializeBody.push(
             `    for (let i = 0; i < ${
-              o.length ? o.length : `${o.name}Length`
+            o.length ? o.length : `${o.name}Length`
             }; i++) {`,
             `      const e = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
-              o.type
+            o.type
             };`,
             `      e.deserialize(reader);`,
             `      this.${o.name}.push(e);`,
@@ -221,7 +225,7 @@ function buildMessage(
           );
           deserializeBody.push(
             `    for (let i = 0; i < ${
-              o.length ? o.length : `${o.name}Length`
+            o.length ? o.length : `${o.name}Length`
             }; i++) {`,
             `      const e = new ${o.type}();`,
             `      e.deserialize(reader);`,
@@ -237,10 +241,10 @@ function buildMessage(
         );
         deserializeBody.push(
           `    for (let i = 0; i < ${
-            o.length ? o.length : `${o.name}Length`
+          o.length ? o.length : `${o.name}Length`
           }; i++) {`,
           `      this.${o.name}.push(reader.${o.writeMethod &&
-            o.writeMethod.replace("write", "read")}());`,
+          o.writeMethod.replace("write", "read")}());`,
           `    }`
         );
       }
@@ -252,9 +256,9 @@ function buildMessage(
         serializeBody.push(`    this.${o.name}.serialize(writer);`);
         deserializeBody.push(
           `    this.${
-            o.name
+          o.name
           } = ProtocolTypeManager.getInstance(reader.readUnsignedShort()) as ${
-            o.type
+          o.type
           };`
         );
         deserializeBody.push(`    this.${o.name}.deserialize(reader);`);
@@ -267,9 +271,9 @@ function buildMessage(
           serializeBody.push(`    writer.${o.writeMethod}(this.${o.name});`);
           deserializeBody.push(
             `    this.${o.name} = reader.${
-              o.writeMethod
-                ? o.writeMethod.replace("write", "read")
-                : `${o.method}`
+            o.writeMethod
+              ? o.writeMethod.replace("write", "read")
+              : `${o.method}`
             }();`
           );
         }
