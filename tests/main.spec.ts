@@ -30,14 +30,14 @@ describe("Main Tests", () => {
   });
 
   it("should have enums", () => {
-    const result = expect(protocol.enums.length).to.equal(87);
+    const result = expect(protocol.enums.length).to.equal(88);
   });
 
   it("should have messages", () => {
-    const result = expect(protocol.messages.length).to.equal(1059);
+    const result = expect(protocol.messages.length).to.equal(1062);
   });
 
   it("should have types", () => {
-    const result = expect(protocol.types.length).to.equal(309);
+    const result = expect(protocol.types.length).to.equal(313);
   });
 });
