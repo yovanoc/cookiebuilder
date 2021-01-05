@@ -41,7 +41,7 @@
     "typescript": "^3.2.4"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "eway": "^0.0.8",
     "listr": "^0.14.3",
     "xswf": "0.0.4",
